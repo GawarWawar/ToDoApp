@@ -8,6 +8,9 @@ class Project(models.Model):
     name = models.CharField(verbose_name="Name", max_length=100)
     creation_date = models.DateTimeField(verbose_name="Date of Creation", default=datetime.datetime.now)
     expire_date = models.DateTimeField(verbose_name="Date of expiration", blank=True, null=True, default=None)
+    
+    def __str__(self):
+        return self.name
 
 class Task(models.Model):
     project_instance = models.ForeignKey(Project, verbose_name="Project", on_delete=models.CASCADE)
