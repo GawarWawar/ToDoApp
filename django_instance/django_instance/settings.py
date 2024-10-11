@@ -41,7 +41,7 @@ INSTALLED_APPS = [
     'allauth',
     'allauth.account',
     
-    "schedule.apps"
+    "schedule.apps.ScheduleConfig"
 ]
 
 MIDDLEWARE = [
