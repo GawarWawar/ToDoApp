@@ -1,10 +1,10 @@
 from django.db import models
-from django.contrib.auth.models import User
 import datetime
+from django_instance import settings
 
 # Create your models here.
 class Project(models.Model):
-    user_instance = models.ForeignKey(User, verbose_name="User", on_delete=models.CASCADE)
+    user_instance = models.ForeignKey(settings.AUTH_USER_MODEL, verbose_name="User", on_delete=models.CASCADE)
     name = models.CharField(verbose_name="Name", max_length=100)
     creation_date = models.DateTimeField(verbose_name="Date of Creation", default=datetime.datetime.now)
     expire_date = models.DateTimeField(verbose_name="Date of expiration", blank=True, null=True, default=None)
