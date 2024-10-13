@@ -1,0 +1,19 @@
+{% load static %}
+<html>
+    <head>
+        <script type="text/javascript" src={% static "functionality.js"%}></script>
+        <script>
+            console.log("Hi")
+            document.addEventListener('DOMContentLoaded', function() {
+                var projects = {{data|safe}};
+                build(projects)
+                console.log(projects)
+            })
+        </script>
+    </head>
+    <body>
+        <div id="main">
+            
+        </div>
+    </body>
+</html>
