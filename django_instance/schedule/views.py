@@ -12,23 +12,10 @@ def get_users_projects(request):
     all_tasks = []
     for project in projects:
         tasks = models.Task.objects.filter(project_instance = project)
-        proj_dict = {
-            "name": project.name, 
-            "creation_date": project.creation_date.strftime(TIME_FORMAT),
-            "expire_date": 
-                project.expire_date if project.expire_date is None 
-                    else project.expire_date.strftime(TIME_FORMAT),
-            "tasks": []
-        }
+        proj_dict = project.convert_time_field_to_json()
+        proj_dict["tasks"] = []
         for task in tasks:
-            task_dict = {
-                "description": task.description,
-                "priority": task.priority,
-                "creation_date": task.creation_date.strftime(TIME_FORMAT),
-                "expire_date": 
-                    task.expire_date if task.expire_date is None 
-                        else task.expire_date.strftime(TIME_FORMAT),
-            }
+            task_dict = task.convert_time_field_to_json()
             proj_dict["tasks"].append(task_dict)
         all_tasks.append(proj_dict)
     task_collection_json = json.dumps(all_tasks)
