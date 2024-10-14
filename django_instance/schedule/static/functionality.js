@@ -1,6 +1,7 @@
  /*jslint devel: true */
+import { create_task_structure } from "./createTask.js";
 
-"use strict";
+
 function build(data) {
     console.log(data);
     var main_block = document.getElementById("main");
@@ -32,20 +33,7 @@ function build(data) {
         const taskList = document.createElement("ul");
         for (let index = 0; index < project.tasks.length; index++) {
             const task = project.tasks[index];
-
-            // Checkbox to mark task
-            const newTask = document.createElement("li");
-            const taskCheckBox = document.createElement("input");
-                taskCheckBox.type = "checkbox";
-                taskCheckBox.id = task.id
-            newTask.appendChild(taskCheckBox);
-
-            // Lable for the checkbox
-            const taskLabel = document.createElement("label");
-                taskLabel.append(document.createTextNode(task.description))
-                taskLabel.htmlFor = task.id;
-            newTask.appendChild(taskLabel);
-
+            const newTask = create_task_structure(task);
             taskList.append(newTask);
         }
         newProject.appendChild(taskList)
@@ -54,3 +42,5 @@ function build(data) {
     }
 }
 
+// Expose mainFunction globally
+window.build = build;

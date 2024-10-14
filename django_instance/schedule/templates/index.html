@@ -1,7 +1,7 @@
 {% load static %}
 <html>
     <head>
-        <script type="text/javascript" src={% static "functionality.js"%}></script>
+        <script type="module" src={% static "functionality.js"%}></script>
         <script>
             document.addEventListener('DOMContentLoaded', function() {
                 var projects = {{data|safe}};
