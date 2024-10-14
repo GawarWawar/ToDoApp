@@ -1,20 +1,18 @@
-function task_submit_listen(){
-    const formElem = document.querySelector("form");
-    formElem.addEventListener("submit", (event) => {
-        // on form submission, prevent default
-        event.preventDefault();
-        
-        var xhttp = new XMLHttpRequest();
+document.addEventListener("submit", (event) => {
+  // on form submission, prevent default
+  event.preventDefault();
+  const { target } = event;
 
-        // construct a FormData object, which fires the formdata event
-        const formData = new FormData(formElem);
+  let xhttp = new XMLHttpRequest();
 
-        xhttp.withCredentials = "true"
-        xhttp.open(formElem.getAttribute('method'), formElem.getAttribute('action'), true);
-        xhttp.setRequestHeader("X-CSRFToken", "{{ csrf_token }}");
-        
-        xhttp.send(formData);
-      });
-}
+  xhttp.withCredentials = "true";
+  xhttp.open(
+    target.getAttribute("method"),
+    target.getAttribute("action"),
+    true
+  );
+  xhttp.setRequestHeader("X-CSRFToken", "{{ csrf_token }}");
 
-window.task_submit_listen = task_submit_listen;
+  const formData = new FormData(target);
+  xhttp.send(formData);
+});
