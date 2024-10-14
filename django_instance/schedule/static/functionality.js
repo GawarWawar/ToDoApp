@@ -12,25 +12,34 @@ function build(data) {
 
         // Element for the project
         const newProject = document.createElement("div");
+            newProject.className = "container";
         
         // Header of the project (blue zone in the top)
         const header = document.createElement("div");
-            header.append(document.createTextNode(project.name));
+            header.className = "row";
+                const headerText = document.createElement("p") 
+                headerText.className = "h2"
+                headerText.append(document.createTextNode(project.name))
+            header.append(headerText);
         newProject.appendChild(header);
 
         // Form to create new tasks for the project
-        const creatonForm = document.createElement("form");
-            const formInput = document.createElement("input");
-                formInput.type = "text";
-                formInput.placeholder = "Start typing here to create a task";
-            creatonForm.appendChild(formInput);
-            const formButton = document.createElement("button");
-                formButton.append(document.createTextNode("Add Task"));
-            creatonForm.appendChild(formButton);
-        newProject.appendChild(creatonForm)
+        const formDiv = document.createElement("div")
+        formDiv.className = "row"
+            const creationForm = document.createElement("form");
+                const formInput = document.createElement("input");
+                    formInput.type = "text";
+                    formInput.placeholder = "Start typing here to create a task";
+                creationForm.appendChild(formInput);
+                const formButton = document.createElement("button");
+                    formButton.append(document.createTextNode("Add Task"));
+                    creationForm.appendChild(formButton);
+            formDiv.appendChild(creationForm)
+        newProject.appendChild(formDiv)
 
         // List of tasks
         const taskList = document.createElement("ul");
+        taskList.className = "list-group"
         for (let index = 0; index < project.tasks.length; index++) {
             const task = project.tasks[index];
             const newTask = create_task_structure(task);
