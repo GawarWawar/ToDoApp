@@ -17,9 +17,11 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path, include
 from schedule import urls as schedule_urls
+from schedule import views as schedule_views
 
 urlpatterns = [
+    path('', schedule_views.get_users_projects),
     path('admin/', admin.site.urls),
     path('accounts/', include('allauth.urls')),
-    path('', include(schedule_urls))
+    path('api/', include(schedule_urls))
 ]

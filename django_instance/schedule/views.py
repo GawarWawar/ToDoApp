@@ -1,14 +1,12 @@
 import json
 from django.shortcuts import render, HttpResponse
 from allauth.account import decorators
+from django.views.decorators.csrf import csrf_exempt
 from . import models
 # Create your views here.
 @decorators.login_required
-def get_users_projects(request):
-    TIME_FORMAT = "%d/%m/%Y, %H:%M:%S"
-    
+def get_users_projects(request):    
     projects = models.Project.objects.filter(user_instance = request.user)
-    # list_of_projects = [project.name for project in projects]
     all_tasks = []
     for project in projects:
         tasks = models.Task.objects.filter(project_instance = project)
@@ -20,3 +18,9 @@ def get_users_projects(request):
         all_tasks.append(proj_dict)
     task_collection_json = json.dumps(all_tasks)
     return render(request, "index.html", {"data": task_collection_json})
+
+@decorators.login_required
+@csrf_exempt
+def task(request, project_id):
+    return HttpResponse()
+
