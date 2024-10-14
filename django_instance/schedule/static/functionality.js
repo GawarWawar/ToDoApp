@@ -27,8 +27,12 @@ function build(data) {
         const formDiv = document.createElement("div")
         formDiv.className = "row"
             const creationForm = document.createElement("form");
+                creationForm.action = `api/projects/${project.id}/tasks/create`
+                creationForm.id  = "task_creation_form"
+                creationForm.method  = "POST"
                 const formInput = document.createElement("input");
                     formInput.type = "text";
+                    formInput.name = "description"
                     formInput.placeholder = "Start typing here to create a task";
                 creationForm.appendChild(formInput);
                 const formButton = document.createElement("button");
