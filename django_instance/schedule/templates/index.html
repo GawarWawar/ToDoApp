@@ -3,11 +3,9 @@
     <head>
         <script type="text/javascript" src={% static "functionality.js"%}></script>
         <script>
-            console.log("Hi")
             document.addEventListener('DOMContentLoaded', function() {
                 var projects = {{data|safe}};
                 build(projects)
-                console.log(projects)
             })
         </script>
     </head>
