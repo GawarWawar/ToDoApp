@@ -7,13 +7,13 @@
         <script type="module" src={% static "listeners.js"%}></script>
         <script type="module" src={% static "tasks.js"%}></script>
     </head>
-    <body>
+    <body class="background">
         <div  id="main"
             x-data="{ projects: [], key: 0, tasks: [] }"
             x-init="projects = await (await fetch('/api/projects')).json()"
         >
         <template x-for="project in projects">
-            <div class="todo">
+            <div class="todo centered">
                 <div>
                     <p class="h2" x-text="project.name"></p>
                     <form
@@ -21,8 +21,13 @@
                         x-bind:action="'api/projects/'+project.id+'/tasks/create'" 
                         @submit="tasks = await fetchProjectsTasks(project.id)"
                     >
-                        <input type="text" name="description" placeholder="Start typing here to create a task" pattern="^.{0,1000}$">
-                        <button type='submit'>Add Task</button>
+                        <input 
+                            type="text" 
+                            name="description" 
+                            placeholder="Start typing here to create a task" 
+                            pattern="^.{0,1000}$"
+                        >
+                        <button class="btn btn-success" type='submit'>Add Task</button>
                     </form>
                 </div>
                     
@@ -51,7 +56,39 @@
 
             </div>
         </template>
-            
+        </div>
+        <div 
+            class="centered"
+            x-data="{ open: false, t_display: '', t_opened:'Add TODO List', t_closed: 'Close' }"
+            x-init = "t_display = t_opened"
+        >
+        <button 
+            class="btn btn-primary"
+            @click="
+                open = !open; 
+                if(open){t_display = t_closed}else{t_display = t_opened};
+            " 
+            x-text="t_display"
+        ></button>
+        <template x-if="open==true">
+                <div class="row">
+                        <div class = "row">
+                                <div class = "col"> Name</div>
+                                <div class = "col"> Expiration Date (optional)</div>
+                        </div>
+                        <div class = "row">
+                            <div class = "col">
+                                <input type="text">
+                            </div>
+                            <div class = "col">
+                                <input type="date">
+                            </div>
+                        </div>
+                        <div class = "col">
+                            <button  class="btn btn-primary" x-text="t_opened"> </button>
+                        </div>
+                </div>
+            </template>
         </div>
     </body>
 </html>
