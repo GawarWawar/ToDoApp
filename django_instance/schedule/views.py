@@ -53,15 +53,18 @@ def task_endpoint(request, project_id):
             proj_dict = task.convert_time_field_to_json()
             all_tasks.append(proj_dict)
         context = json.dumps(all_tasks)
-        print(context)
     if request.method == "POST":
-        # project_instance = models.Project.objects.get(id = project_id)
-        # new_task = models.Task.objects.create(
-        #     project_instance = project_instance,
-        #     description = request.POST["description"],
-        #     priority = 0,
-        # )
-        context = f"Hi, {request.POST["description"]}"
-        print(context)
+        project_instance = models.Project.objects.get(id = project_id)
+        task_description = request.POST["description"]
+        if task_description is not "" and len(task_description) < 1000:
+            new_task = models.Task.objects.create(
+                project_instance = project_instance,
+                description = task_description,
+                priority = 0,
+            )
+            new_task.save()
+            context = new_task.convert_time_field_to_json()
+        else:
+            context = {"error": "Bad description"}
     return HttpResponse(context)
 

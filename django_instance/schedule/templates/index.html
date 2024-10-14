@@ -16,12 +16,12 @@
             <div class="todo">
                 <div>
                     <p class="h2" x-text="project.name"></p>
-                    <form 
-                        x-bind:action="'api/projects/'+project.id+'/tasks/create'" 
+                    <form
                         method="POST" 
+                        x-bind:action="'api/projects/'+project.id+'/tasks/create'" 
                         @submit="tasks = await fetchProjectsTasks(project.id)"
                     >
-                        <input type="text" name="description" placeholder="Start typing here to create a task">
+                        <input type="text" name="description" placeholder="Start typing here to create a task" pattern="^.{0,1000}$">
                         <button type='submit'>Add Task</button>
                     </form>
                 </div>
