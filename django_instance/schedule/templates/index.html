@@ -82,24 +82,37 @@
         ></button>
         <template x-if="open==true">
                 <div class="row">
+                    <form
+                        method="POST" 
+                        x-bind:action="'api/projects/create'" 
+                        @submit.prevent="
+                            response = makeXMLRequest(event);
+                            response.addEventListener('readystatechange', function () {
+                                if (this.readyState == 4 && this.status==200){
+                                    $dispatch('restart')
+                                }
+                            });
+                        "
+                    >
                         <div class = "row">
                                 <div class = "col"> Name</div>
                                 <div class = "col"> Expiration Date (optional)</div>
                         </div>
                         <div class = "row">
                             <div class = "col">
-                                <input type="text">
+                                <input type="text" name="name" placeholder="PlaceHorlder">
                             </div>
                             <div class = "col">
-                                <input type="date">
+                                <input type="datetime-local" name="expire_date">
                             </div>
                         </div>
                         <div class = "col">
-                            <button  class="btn btn-primary" x-text="t_opened"> </button>
+                            <button  class="btn btn-primary" type="submit" x-text="t_opened"> </button>
                         </div>
+                    </form>
                 </div>
             </template>
         </div>
-        </div>
+    </div>
     </body>
 </html>
