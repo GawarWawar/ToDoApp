@@ -96,12 +96,12 @@
         </template>
         </div>
         <div 
-            class="d-flex justify-content-center p-2"
+            class="d-flex justify-content-center"
             x-data="{ open: false, t_display: '', t_opened:'Add TODO List', t_closed: 'Close' }"
             x-init = "t_display = t_opened"
         >
         <button 
-            class="btn btn-primary justify-content-center mx-2"
+            class="btn btn-primary mx-2"
             @click="
                 open = !open; 
                 if(open){t_display = t_closed}else{t_display = t_opened};
@@ -109,7 +109,7 @@
             x-text="t_display"
         ></button>
         <template class="container" x-if="open==true">
-                <div class = "d-flex justify-content-center mx-2">
+                <div class = "d-flex ">
                     <form
                         method="POST" 
                         x-bind:action="'api/projects/create'" 
