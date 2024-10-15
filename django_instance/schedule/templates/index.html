@@ -6,6 +6,7 @@
         <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
         <script type="module" src={% static "listeners.js"%}></script>
         <script type="module" src={% static "tasks.js"%}></script>
+        <script type="module" src={% static "xml_requests.js"%}></script>
     </head>
     <body class="background">
         <div  id="main"
@@ -23,7 +24,7 @@
                         method="POST" 
                         x-bind:action="'api/projects/'+project.id+'/tasks/create'" 
                         @submit.prevent="
-                            response = await createTask(event);
+                            response = await makeXMLRequest(event);
                             response.addEventListener('readystatechange', function () {
                                 if (this.readyState == 4 && this.status==200){
                                     $dispatch('restart')
