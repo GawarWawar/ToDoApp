@@ -10,11 +10,11 @@
     </head>
     <body class="background">
         <div  id="main"
-            x-data="{ projects: [], key: 0, tasks: [] }"
-            x-init="projects = await (await fetch('/api/projects')).json()"
+            x-init="projects = await (await fetch('/api/projects/')).json()"
         >
         <template x-for="project in projects">
             <div class="todo centered"
+                x-data="{  key: 0, tasks: [] }"
                 x-init="tasks = await fetchProjectsTasks(project.id)"
                 @restart = "tasks = await fetchProjectsTasks(project.id)"
             >
