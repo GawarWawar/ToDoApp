@@ -8,7 +8,8 @@
         <script type="module" src={% static "tasks.js"%}></script>
         <script type="module" src={% static "xml_requests.js"%}></script>
     </head>
-    <body class="background">
+    <body  class="background">
+    <div x-data="{projects: []}" @restart  = "projects = await (await fetch('/api/projects/')).json()">
         <div  id="main"
             x-init="projects = await (await fetch('/api/projects/')).json()"
         >
@@ -98,6 +99,7 @@
                         </div>
                 </div>
             </template>
+        </div>
         </div>
     </body>
 </html>
