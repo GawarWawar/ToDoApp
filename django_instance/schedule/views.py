@@ -1,7 +1,8 @@
-import json
+import datetime
 from django.shortcuts import render, HttpResponse
 from allauth.account import decorators
 from django.views.decorators.csrf import csrf_exempt
+import json
 from . import models
 # Create your views here.
 @decorators.login_required
@@ -20,6 +21,7 @@ def get_users_projects(request):
     return render(request, "index.html", {"data": task_collection_json})
 
 decorators.login_required
+@csrf_exempt
 def project_endpoint(request):
     if request.method == "GET":
         projects = models.Project.objects.filter(user_instance = request.user)
@@ -31,13 +33,26 @@ def project_endpoint(request):
         print(context)
     
     elif request.method == "POST":
-
-        # new_project = models.Project.objects.create(
-        #     user_instance = request.user,
-        #     name = request.project["name"]
-        # )
+        TIME_FORMAT = '%Y-%m-%dT%H:%M'
         
-        greating_string = f"Hi"
+        name = request.POST["name"]
+        if name == "":
+            name = "PlaceHolder"  
+              
+        expire_date = request.POST["expire_date"]
+        if expire_date == "" :
+            expire_date = None
+        else:
+            expire_date = datetime.datetime.strptime(expire_date, TIME_FORMAT)
+
+        new_project = models.Project.objects.create(
+            user_instance = request.user,
+            name = name,
+            expire_date = expire_date
+        )
+        new_project.save()
+        context = new_project.convert_time_field_to_json()
+        
     return HttpResponse(context)
         
 
