@@ -1,6 +1,7 @@
 from allauth.account import decorators
 import datetime
 
+from django.core.exceptions import ObjectDoesNotExist
 from django.shortcuts import render, HttpResponse
 from django.views.decorators.csrf import csrf_exempt
 from django.utils.datastructures import MultiValueDictKeyError
@@ -72,7 +73,12 @@ def project_endpoint(request):
 @csrf_exempt
 def project_tasks_endpoint(request, project_id):
     if request.method == "GET":
-        project_instance = models.Project.objects.get(id = project_id)
+        try:
+            project_instance = models.Project.objects.get(id = project_id)
+        except ObjectDoesNotExist:
+            context = json.dumps({"error": "Bad ID"})
+            status=404
+            return HttpResponse(context, status = status)
         
         tasks = models.Task.objects.filter(project_instance = project_instance)
         all_tasks = []
@@ -88,7 +94,14 @@ def project_tasks_endpoint(request, project_id):
             status=422
             return HttpResponse(context, status = status)
             
-        project_instance = models.Project.objects.get(id = project_id)
+        try:
+            project_instance = models.Project.objects.get(id = project_id)
+        except ObjectDoesNotExist:
+            context = json.dumps({"error": "Bad ID"})
+            status=404
+            return HttpResponse(context, status = status)
+        
+        
         if task_description is not "" and len(task_description) < 1000:
             new_task = models.Task.objects.create(
                 project_instance = project_instance,
@@ -108,7 +121,12 @@ def project_tasks_endpoint(request, project_id):
 @csrf_exempt
 def project_task_endpoint(request, project_id, task_id):
     if request.method == "GET":
-        project_instance = models.Project.objects.get(id = project_id)
+        try:
+            project_instance = models.Project.objects.get(id = project_id)
+        except ObjectDoesNotExist:
+            context = json.dumps({"error": "Bad ID"})
+            status=404
+            return HttpResponse(context, status = status)
         
         task = models.Task.objects.filter(project_instance = project_instance, id = task_id)[0]
         context = json.dumps(task.convert_time_field_to_json())
