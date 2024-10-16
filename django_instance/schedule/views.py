@@ -68,6 +68,50 @@ def projects_endpoint(request):
         
     return HttpResponse(context)
         
+decorators.login_required
+@csrf_exempt
+def project_endpoint(request, project_id):
+    if request.method == "GET":
+        try:
+            project = models.Project.objects.get(id = project_id)
+        except ObjectDoesNotExist:
+            context = json.dumps({"error": "Bad ID"})
+            status=404
+            return HttpResponse(context, status = status)
+        context = json.dumps(project.convert_time_field_to_json())
+    elif request.method == "POST":
+        try:
+            name = request.POST["name"]
+            expire_date = request.POST["expire_date"]
+        except MultiValueDictKeyError:
+            context = json.dumps({"error": "Bad POST"})
+            status=422
+            return HttpResponse(context, status = status)
+
+        try:
+            project = models.Project.objects.get(id = project_id)
+        except ObjectDoesNotExist:
+            context = json.dumps({"error": "Bad ID"})
+            status=404
+            return HttpResponse(context, status = status)
+
+        if 0 < len(name) <= 100: 
+            project.name = name
+        else:
+            context = json.dumps({"error": "Bad POST"})
+            status = 422
+            return HttpResponse(context, status=status)
+        
+        if expire_date == "" :
+            expire_date = None
+        else:
+            expire_date = datetime.datetime.strptime(expire_date, JS_TIME_FORMAT)
+        project.expire_date = expire_date
+        
+        project.save()
+        
+        context = project.convert_time_field_to_json()
+    return HttpResponse(context)
 
 @decorators.login_required
 @csrf_exempt
