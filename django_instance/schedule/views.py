@@ -154,5 +154,17 @@ def project_task_endpoint(request, project_id, task_id):
         task.save()
         
         context = task.convert_time_field_to_json()
+        
+    elif request.method == "DELETE":
+        try:
+            task_to_delete = models.Task.objects.get(pk = task_id)
+        except Exception as e:
+            print(e)
+            context = json.dumps({"error": "Bad ID"})
+            status=404
+            return HttpResponse(context, status = status)
+        task_to_delete.delete()
+        context = json.dumps(task_to_delete.convert_time_field_to_json())
+
     return HttpResponse(context)
     
