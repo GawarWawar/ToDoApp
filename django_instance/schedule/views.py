@@ -144,6 +144,10 @@ def project_task_endpoint(request, project_id, task_id):
 
         if 0 < len(description) < 1000: 
             task.description = description
+        else:
+            context = json.dumps({"error": "Bad POST"})
+            status = 422
+            return HttpResponse(context, status=status)
         
         if expire_date == "" :
             expire_date = None
@@ -158,8 +162,7 @@ def project_task_endpoint(request, project_id, task_id):
     elif request.method == "DELETE":
         try:
             task_to_delete = models.Task.objects.get(pk = task_id)
-        except Exception as e:
-            print(e)
+        except ObjectDoesNotExist:
             context = json.dumps({"error": "Bad ID"})
             status=404
             return HttpResponse(context, status = status)
