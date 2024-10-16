@@ -2,6 +2,8 @@ import datetime
 from django.shortcuts import render, HttpResponse
 from allauth.account import decorators
 from django.views.decorators.csrf import csrf_exempt
+from django.utils.datastructures import MultiValueDictKeyError
+
 import json
 from . import models
 from django_instance.settings import JS_TIME_FORMAT
@@ -35,15 +37,18 @@ def project_endpoint(request):
             proj_dict = project.convert_time_field_to_json()
             all_projects.append(proj_dict)
         context = json.dumps(all_projects)
-        print(context)
     
     elif request.method == "POST":
+        try:
+            expire_date = request.POST["expire_date"]
+        except MultiValueDictKeyError:
+            context = json.dumps({"error": "Bad POST"})
+            status=422
+            return HttpResponse(context, status = status)
         
-        name = request.POST["name"]
         if name == "":
             name = "PlaceHolder"  
-              
-        expire_date = request.POST["expire_date"]
+            
         if expire_date == "" :
             expire_date = None
         else:
@@ -73,8 +78,14 @@ def task_endpoint(request, project_id):
             all_tasks.append(proj_dict)
         context = json.dumps(all_tasks)
     if request.method == "POST":
+        try:
+            task_description = request.POST["description"]
+        except MultiValueDictKeyError:
+            context = json.dumps({"error": "Bad POST"})
+            status=422
+            return HttpResponse(context, status = status)
+            
         project_instance = models.Project.objects.get(id = project_id)
-        task_description = request.POST["description"]
         if task_description is not "" and len(task_description) < 1000:
             new_task = models.Task.objects.create(
                 project_instance = project_instance,
@@ -84,6 +95,9 @@ def task_endpoint(request, project_id):
             new_task.save()
             context = new_task.convert_time_field_to_json()
         else:
+            context = json.dumps({"error": "Bad POST"})
+            status = 422
+            return HttpResponse(context, status=status)
             context = {"error": "Bad description"}
     return HttpResponse(context)
 
