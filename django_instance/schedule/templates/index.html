@@ -25,7 +25,9 @@
             >
                 <div class="row project-header px-0" x-data="{edit_open: false, garbage_open: false}">
                     <div class="col-sm-1"></div>
-                    <p class="h2 col-sm-9" x-text="project.name"></p>
+                    <div class="col-sm-9">
+                            <p class="h2"  x-text="project.name"></p>
+                    </div>
                     <div class="col-sm-2 d-flex justify-content-center ">
                     
                         <template x-if="garbage_open==false">
