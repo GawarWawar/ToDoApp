@@ -111,10 +111,12 @@
                                             method="DELETE" 
                                             x-bind:action="`api/projects/${project.id}/tasks/${task.id}/delete`" 
                                             @submit.prevent="
+                                                
                                                 response = makeXMLRequest(event);
                                                 response.addEventListener('readystatechange', function () {
                                                     if (this.readyState == 4 && this.status==200){
                                                         $dispatch('restart')
+                                                        garbage_open = !garbage_open; 
                                                     }
                                                 });
                                             "
