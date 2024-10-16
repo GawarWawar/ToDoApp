@@ -44,6 +44,7 @@ def projects_endpoint(request):
     
     elif request.method == "POST":
         try:
+            name = request.POST["name"]
             expire_date = request.POST["expire_date"]
         except MultiValueDictKeyError:
             context = json.dumps({"error": "Bad POST"})
