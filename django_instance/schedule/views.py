@@ -1,12 +1,15 @@
-import datetime
-from django.shortcuts import render, HttpResponse
 from allauth.account import decorators
+import datetime
+
+from django.shortcuts import render, HttpResponse
 from django.views.decorators.csrf import csrf_exempt
 from django.utils.datastructures import MultiValueDictKeyError
 
 import json
-from . import models
+
 from django_instance.settings import JS_TIME_FORMAT
+from . import models
+
 # Create your views here.
 @decorators.login_required
 def index(request):
@@ -98,6 +101,40 @@ def project_tasks_endpoint(request, project_id):
             context = json.dumps({"error": "Bad POST"})
             status = 422
             return HttpResponse(context, status=status)
-            context = {"error": "Bad description"}
+            
     return HttpResponse(context)
 
+@decorators.login_required
+@csrf_exempt
+def project_task_endpoint(request, project_id, task_id):
+    if request.method == "GET":
+        project_instance = models.Project.objects.get(id = project_id)
+        
+        task = models.Task.objects.filter(project_instance = project_instance, id = task_id)[0]
+        context = json.dumps(task.convert_time_field_to_json())
+    elif request.method == "POST":        
+        try:
+            description = request.POST["description"]
+            expire_date = request.POST["expire_date"]
+        except MultiValueDictKeyError:
+            context = json.dumps({"error": "Bad POST"})
+            status=422
+            return HttpResponse(context, status = status)
+
+        project_instance = models.Project.objects.get(id = project_id)
+        task = models.Task.objects.filter(project_instance = project_instance, id = task_id)[0]
+
+        if 0 < len(description) < 1000: 
+            task.description = description
+        
+        if expire_date == "" :
+            expire_date = None
+        else:
+            expire_date = datetime.datetime.strptime(expire_date, JS_TIME_FORMAT)
+        task.expire_date = expire_date
+        
+        task.save()
+        
+        context = task.convert_time_field_to_json()
+    return HttpResponse(context)
+    
