@@ -33,7 +33,7 @@ def get_users_projects(request):
 
 decorators.login_required
 @csrf_exempt
-def project_endpoint(request):
+def projects_endpoint(request):
     if request.method == "GET":
         projects = models.Project.objects.filter(user_instance = request.user)
         all_projects = []
