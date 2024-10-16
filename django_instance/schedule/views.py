@@ -4,6 +4,7 @@ from allauth.account import decorators
 from django.views.decorators.csrf import csrf_exempt
 import json
 from . import models
+from django_instance.settings import JS_TIME_FORMAT
 # Create your views here.
 @decorators.login_required
 def index(request):
@@ -37,7 +38,6 @@ def project_endpoint(request):
         print(context)
     
     elif request.method == "POST":
-        TIME_FORMAT = '%Y-%m-%dT%H:%M'
         
         name = request.POST["name"]
         if name == "":
@@ -47,7 +47,7 @@ def project_endpoint(request):
         if expire_date == "" :
             expire_date = None
         else:
-            expire_date = datetime.datetime.strptime(expire_date, TIME_FORMAT)
+            expire_date = datetime.datetime.strptime(expire_date, JS_TIME_FORMAT)
 
         new_project = models.Project.objects.create(
             user_instance = request.user,

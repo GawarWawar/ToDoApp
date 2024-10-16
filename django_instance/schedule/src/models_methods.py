@@ -1,5 +1,6 @@
 import abc
 from datetime import datetime
+from django_instance.settings import JS_TIME_FORMAT
 
 class ModelsUtils():
     @classmethod
@@ -8,13 +9,13 @@ class ModelsUtils():
         ...
 
 class ModelsWithTimeFIelds(ModelsUtils):
-    def time_field_to_string(self, fieeld_key:str, TIME_FORMAT = "%d/%m/%Y, %H:%M:%S"):
+    def time_field_to_string(self, fieeld_key:str, TIME_FORMAT = JS_TIME_FORMAT):
         if self.__dict__[fieeld_key] is not None:
             return self.__dict__[fieeld_key].strftime(TIME_FORMAT)
         else:
             return None
         
-    def convert_time_field_to_json(self,  TIME_FORMAT = "%d/%m/%Y, %H:%M:%S"):
+    def convert_time_field_to_json(self,  TIME_FORMAT = JS_TIME_FORMAT):
         self_dict_to_json = self.to_dict()
         for key in self_dict_to_json:
             if "date" in key:
