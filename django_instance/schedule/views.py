@@ -112,6 +112,17 @@ def project_endpoint(request, project_id):
         project.save()
         
         context = project.convert_time_field_to_json()
+        
+    elif request.method == "DELETE":
+        try:
+            project_to_delete = models.Project.objects.get(pk = project_id)
+        except ObjectDoesNotExist:
+            context = json.dumps({"error": "Bad ID"})
+            status=404
+            return HttpResponse(context, status = status)
+        project_to_delete.delete()
+        context = json.dumps(project_to_delete.convert_time_field_to_json())
+        
     return HttpResponse(context)
 
 @decorators.login_required
