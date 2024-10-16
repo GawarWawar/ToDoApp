@@ -45,7 +45,7 @@
                         "
                     >
                     <div 
-                        class=" d-flex justify-content-center p-0 m-auto input-group" >
+                        class=" d-flex align-items-center justify-content-center p-0 m-auto input-group" >
                     <div class="col-sm-1">
                     </div>
                         <input 
@@ -71,10 +71,14 @@
                             <div class = "d-flex col-1 text-start border-end border-top border-secondary ">
                                 <input class="justify-content-center my-auto mx-auto col" type="checkbox" name="" x-bind:id="checkbox_id">
                             </div>
+                            <div 
+                                class = " col text-start border-start border-end border-top border-secondary"
+                            >
                                 <template x-if="edit_open==false && garbage_open==false">
                                     <label x-bind:for="checkbox_id" x-text="task.description"></label>
                                 </template>
                                 <template x-if="edit_open==true">
+                                    <div class="d-flex flex-column">
                                         <form
                                             method="POST" 
                                             x-bind:action="`api/projects/${project.id}/tasks/${task.id}/edit`" 
@@ -87,11 +91,9 @@
                                                 });
                                             "
                                         >
-                                        <div class="form-group d-grid justify-content-center" x-data="{description: task.description, date: task.expire_date}">
-                                            <div class = "row">
-                                                    <div class = "col"> Description</div>
-                                            </div>
-                                            <textarea class=" row  w-100% form-control h-auto" type="text" name="description"  x-model="description"></textarea>
+                                            <div class="form-group " x-data="{description: task.description, date: task.expire_date}">
+                                                        <div class = "col w-100"> Description</div>
+                                                <textarea class="w-100% form-control h-auto" type="text" name="description"  x-model="description"></textarea>
                                             <div class = "row my-1">
                                                 <div class = "col"> Expire Date</div>
                                             </div>
@@ -101,6 +103,7 @@
                                             </div>
                                         </div>
                                     </form>
+                                    </div>
                                 </template>
                             </div>
                             <div class = "col-md-2 col-xs-3 d-flex justify-content-center border-top border-secondary" >
