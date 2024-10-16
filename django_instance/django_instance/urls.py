@@ -20,7 +20,7 @@ from schedule import urls as schedule_urls
 from schedule import views as schedule_views
 
 urlpatterns = [
-    path('', schedule_views.get_users_projects),
+    path('', schedule_views.index),
     path('admin/', admin.site.urls),
     path('accounts/', include('allauth.urls')),
     path('api/', include(schedule_urls))

@@ -6,6 +6,10 @@ import json
 from . import models
 # Create your views here.
 @decorators.login_required
+def index(request):
+    return render(request, "index.html")
+
+@decorators.login_required
 def get_users_projects(request):    
     projects = models.Project.objects.filter(user_instance = request.user)
     all_tasks = []
