@@ -67,7 +67,7 @@ def project_endpoint(request):
 
 @decorators.login_required
 @csrf_exempt
-def task_endpoint(request, project_id):
+def project_tasks_endpoint(request, project_id):
     if request.method == "GET":
         project_instance = models.Project.objects.get(id = project_id)
         
