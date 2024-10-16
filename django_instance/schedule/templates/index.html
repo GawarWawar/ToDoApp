@@ -85,8 +85,15 @@
                                             @submit.prevent="
                                                 response = makeXMLRequest(event);
                                                 response.addEventListener('readystatechange', function () {
-                                                    if (this.readyState == 4 && this.status==200){
-                                                        $dispatch('restart')
+                                                    if (this.readyState == 4){
+                                                        if(this.status==200){
+                                                            $dispatch('restart');
+                                                            edit_open = !edit_open; 
+                                                        } else {
+                                                            window.alert(
+                                                                'Please make sure that name of a task longer then 0 characters and shorter then 1000'
+                                                            ); 
+                                                        }
                                                     }
                                                 });
                                             "
