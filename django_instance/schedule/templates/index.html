@@ -28,9 +28,9 @@
                     @click="$dispatch('restarttasks')"
                 >
                     <div class="col-sm-1"></div>
-                    <div class="col-sm-9">
+                    <div class="col-sm-9 d-flex justify-content-left">
                         <template x-if="edit_open==false && garbage_open==false">
-                            <p class="h2"  x-text="project.name"></p>
+                            <p class="h2 m-1"  x-text="project.name"></p>
                         </template>
                         <template  template x-if="edit_open==true">
                             <div class="d-flex flex-column">
@@ -146,7 +146,7 @@
                         "
                     >
                     <div 
-                        class=" d-flex align-items-center justify-content-center p-0 m-auto input-group" >
+                        class=" align-items-center justify-content-center m-2 p-0 input-group" >
                     <div class="col-sm-1">
                     </div>
                         <input 
@@ -156,7 +156,7 @@
                             placeholder="Start typing here to create a task" 
                             pattern="^.{0,1000}$"
                         >
-                        <button class="btn btn-success col-sm-2" type='submit'>Add Task</button>
+                        <button class="btn btn-success col-sm-2 p-0" type='submit'>Add Task</button>
                     </div>
                     </form>
                 </div>
@@ -170,8 +170,8 @@
                                 {checkbox_id: 'p'+project.id+'.t'+task.id, garbage_open: false, edit_open: false }
                             "
                         >
-                            <div class = "d-flex col-1 text-start border-end border-top border-secondary ">
-                                <input class="justify-content-center my-auto mx-auto col" type="checkbox" name="" x-bind:id="checkbox_id">
+                                <input class="my-auto mx-auto w-25 form-check-input" type="checkbox" name="" x-bind:id="checkbox_id"
+                                >
                             </div>
                             <div 
                                 class = " col-8 col-md-9 text-start border-start border-end border-top border-secondary"
