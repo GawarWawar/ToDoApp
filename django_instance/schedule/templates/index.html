@@ -184,7 +184,7 @@
                             <div class = "d-flex col-1 text-start border-end border-top border-secondary "
                             x-data="{checked: task.is_completed}"
                             >
-                                <input class="my-auto mx-auto w-25 form-check-input" type="checkbox" name="" x-bind:id="checkbox_id"
+                                <input class="my-auto mx-auto w-25 form-check-input" type="checkbox"
                                     x-model="checked"
                                     @click="
                                     console.log(task.is_completed);
@@ -209,7 +209,7 @@
                                 class = " col col-md-9 text-start border-start border-end border-top border-secondary p-0"
                             >
                                 <template x-if="edit_open==false && garbage_open==false">
-                                    <label class="m-2" x-bind:for="checkbox_id" x-text="task.description"></label>
+                                    <p class="m-2" x-text="task.description"></p>
                                 </template>
                                 <template x-if="edit_open==true">
                                     <div class="d-flex flex-column">
