@@ -19,13 +19,15 @@
         >
         <template x-for="project in projects">
             <div class="my-5 container px-0"
-                x-data="{  key: 0, tasks: [] }"
+                x-data="{  key: 0, tasks: [], look: false }"
                 x-init="tasks = await fetchProjectsTasks(project.id)"
                 @restart = "$dispatch('restarttasks', project.id);"
                 @restarttasks = "tasks = await fetchProjectsTasks(project.id);"
             >
                 <div class="row project-header px-0 m-0" x-data="{edit_open: false, garbage_open: false}" 
                     @click="$dispatch('restarttasks')"
+                    @mouseenter="look = true;"
+                    @mouseleave="look = false"
                 >
                     <div class="col-sm-1"></div>
                     <div class="col-sm-9 d-flex justify-content-left">
@@ -103,9 +105,6 @@
                         </template>
                     </div>
                     <div class="col-sm-2 d-flex justify-content-center "
-                        x-data="{look: false}"
-                        @mouseenter="look = true;"
-                        @mouseleave="look = false"
                     >
                     
                         <template x-if="garbage_open==false">
@@ -174,10 +173,10 @@
                         <div 
                             class = "row mx-0 px-0 " 
                             x-data = "
-                                {checkbox_id: 'p'+project.id+'.t'+task.id, garbage_open: false, edit_open: false, color: ''}
+                                {garbage_open: false, edit_open: false, color: '', look: false}
                             "
-                            @mouseenter="color = '#fcfed5';"
-                            @mouseleave="color = ''; "
+                            @mouseenter="color = '#fcfed5'; look = true"
+                            @mouseleave="color = ''; look = false"
                             x-bind:style="{ background: color}"
 
                         >
@@ -282,9 +281,6 @@
                                 </template>
                             </div>
                             <div class = "col-md-2 col-xs-3 d-flex justify-content-center border-top border-secondary" 
-                                x-data="{look: false}"
-                                @mouseenter="look = true;"
-                                @mouseleave="look = false"
                             >
                                 <template x-if="edit_open==false && garbage_open==false">
                                     <button class='btn' x-show="look">
