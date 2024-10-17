@@ -1,7 +1,8 @@
 from django.urls import path, include
 from . import views_old
 
-from schedule.views.projects_endpoints import project_endpoint, projects_endpoint
+from schedule.views.project_endpoints import project_endpoint
+from schedule.views.projects_endpoints import projects_endpoint
 from schedule.views.tasks_endpoints import project_task_endpoint, project_tasks_endpoint
 
 
