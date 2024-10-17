@@ -30,6 +30,7 @@ class Task(models.Model, models_methods.ModelsWithTimeFIelds):
     priority = models.IntegerField(verbose_name="Priority")
     creation_date = models.DateTimeField(verbose_name="Date of Creation", default=datetime.datetime.now)
     expire_date = models.DateTimeField(verbose_name="Date of expiration", blank=True, null=True, default=None)
+    is_completed = models.BooleanField(verbose_name="Complition status", default=False)
     
     def to_dict(self):
         return {
