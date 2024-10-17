@@ -37,7 +37,7 @@ def create_new_task(task_info:dict, project_id:int):
         return HttpResponse(context, status = status)
     
     
-    if task_description is not "" and len(task_description) < 1000:
+    if task_description != "" and len(task_description) < 1000:
         new_task = models.Task.objects.create(
             project_instance = project_instance,
             description = task_description,
@@ -48,15 +48,10 @@ def create_new_task(task_info:dict, project_id:int):
     else:
         return HttpResponse(json.dumps({"error": "Bad POST"}), status=422)
     
-def get_task(task_id:int):
-    try:
-        task = models.Task.objects.get(id = task_id)
-    except ObjectDoesNotExist:
-        return HttpResponse(json.dumps({"error": "Bad ID"}), status = 404)
-    else:
-        HttpResponse(json.dumps(task.dict_with_convert_time_field_to_json()))
+def get_task(task:models.Task):
+    HttpResponse(json.dumps(task.dict_with_convert_time_field_to_json()))
         
-def edit_task(task_id:int, task_info: dict):
+def edit_task(task:models.Task, task_info: dict):
     try:
         description = task_info["description"]
         expire_date = task_info["expire_date"]
@@ -64,11 +59,6 @@ def edit_task(task_id:int, task_info: dict):
         context = json.dumps({"error": "Bad POST"})
         status=422
         return HttpResponse(context, status = status)
-
-    try:
-        task = models.Task.objects.get(id = task_id)
-    except ObjectDoesNotExist:
-        return HttpResponse(json.dumps({"error": "Bad ID"}), status = 404)
 
     if 0 < len(description) < 1000: 
         task.description = description
@@ -84,11 +74,7 @@ def edit_task(task_id:int, task_info: dict):
     task.save()
     return HttpResponse(task.dict_with_convert_time_field_to_json())
 
-def delete_task(task_id:int):
-    try:
-        task_to_delete = models.Task.objects.get(id = task_id)
-    except ObjectDoesNotExist:
-        return HttpResponse(json.dumps({"error": "Bad ID"}), status = 404)
-    respnse = HttpResponse(json.dumps(task_to_delete.dict_with_convert_time_field_to_json()))
-    task_to_delete.delete()
+def delete_task(task:models.Task):
+    respnse = HttpResponse(json.dumps(task.dict_with_convert_time_field_to_json()))
+    task.delete()
     return respnse
