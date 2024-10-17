@@ -115,6 +115,7 @@ AUTHENTICATION_BACKENDS = [
 ]
 
 AUTH_USER_MODEL = 'auth.User'
+LOGIN_REDIRECT_URL='/'
 
 
 # Internationalization
