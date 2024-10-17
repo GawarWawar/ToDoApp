@@ -41,22 +41,29 @@ def get_task(task:models.Task):
 def edit_task(task:models.Task, task_info: dict):
     try:
         description = task_info["description"]
+    except MultiValueDictKeyError:
+        description = task.description
+    else:
+        if 0 < len(description) < 1000: 
+            task.description = description
+        else:
+            return HttpResponse(json.dumps({"error": "Bad POST"}), status=422)
+        
+    try:
         expire_date = task_info["expire_date"]
     except MultiValueDictKeyError:
-        context = json.dumps({"error": "Bad POST"})
-        status=422
-        return HttpResponse(context, status = status)
-
-    if 0 < len(description) < 1000: 
-        task.description = description
+        expire_date = task.expire_date
     else:
-        return HttpResponse(json.dumps({"error": "Bad POST"}), status=422)
+        if expire_date == "" or expire_date is None:
+            expire_date = None
+        else:
+            expire_date = datetime.datetime.strptime(expire_date, JS_TIME_FORMAT)
+            task.expire_date = expire_date
     
-    if expire_date == "" :
-        expire_date = None
-    else:
-        expire_date = datetime.datetime.strptime(expire_date, JS_TIME_FORMAT)
-    task.expire_date = expire_date
+    try:
+        task.is_completed = task_info["is_completed"]
+    except MultiValueDictKeyError:
+        pass
     
     task.save()
     return HttpResponse(task.dict_with_convert_time_field_to_json())

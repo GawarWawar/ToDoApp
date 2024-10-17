@@ -21,6 +21,11 @@ def project_task_endpoint(request, project_id, task_id):
     if request.method == "GET":
         return HttpResponse(get_task(task))
     elif request.method == "POST":     
+        try:   
+            task_info = json.loads(request.body)
+        except json.decoder.JSONDecodeError:
+            task_info = request.POST
+            
         return HttpResponse(edit_task(task, task_info))
     elif request.method == "DELETE":
         return HttpResponse(delete_task(task))

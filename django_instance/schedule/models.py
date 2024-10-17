@@ -41,6 +41,7 @@ class Task(models.Model, models_methods.ModelsWithTimeFIelds):
             "description": self.description,
             "creation_date": self.creation_date,
             "expire_date": self.expire_date,
+            "is_completed": self.is_completed,
         }
 
     def __str__(self):

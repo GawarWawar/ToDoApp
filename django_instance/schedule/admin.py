@@ -5,7 +5,7 @@ class ProjectAdmin(admin.ModelAdmin):
     list_display = ["name", "user_instance", "creation_date", "expire_date"]
     
 class TaskAdmin(admin.ModelAdmin):
-    list_display = ["id", "project_instance", "description", "priority", "creation_date", "expire_date"]
+    list_display = ["id", "project_instance", "description", "priority", "creation_date", "expire_date", "is_completed"]
 
 # Register your models here.
 admin.site.register(models.Project, ProjectAdmin)

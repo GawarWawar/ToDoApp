@@ -170,7 +170,28 @@
                                 {checkbox_id: 'p'+project.id+'.t'+task.id, garbage_open: false, edit_open: false }
                             "
                         >
+                            <div class = "d-flex col-1 text-start border-end border-top border-secondary "
+                            x-data="{checked: task.is_completed}"
+                            >
                                 <input class="my-auto mx-auto w-25 form-check-input" type="checkbox" name="" x-bind:id="checkbox_id"
+                                    x-model="checked"
+                                    @click="
+                                    console.log(task.is_completed);
+                                    task.is_completed = !task.is_completed;
+                                    fetch(`/api/projects/${project.id}/tasks/${task.id}/edit`, {
+                                        method: 'POST',
+                                        body: JSON.stringify({
+                                            id: task.id,
+                                            description: task.description,
+                                            is_completed: task.is_completed,
+                                            expire_date: task.expire_date
+                                        }),
+                                        headers: {
+                                            'Content-type': 'text/html; charset=UTF-8'
+                                        }
+                                        })
+                                    console.log(task.is_completed)
+                                    "
                                 >
                             </div>
                             <div 
