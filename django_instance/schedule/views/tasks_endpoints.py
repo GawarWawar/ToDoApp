@@ -1,115 +1,15 @@
 from allauth.account import decorators
-import datetime
-
-from django.core.exceptions import ObjectDoesNotExist
-from django.shortcuts import render, HttpResponse
+from django.shortcuts import HttpResponse
 from django.views.decorators.csrf import csrf_exempt
-from django.utils.datastructures import MultiValueDictKeyError
 
-import json
-
-from django_instance.settings import JS_TIME_FORMAT
-from schedule import models
+from .utils.task_actions import get_all_tasks, create_new_task
 
 @decorators.login_required
 @csrf_exempt
 def project_tasks_endpoint(request, project_id):
     if request.method == "GET":
-        try:
-            project_instance = models.Project.objects.get(id = project_id)
-        except ObjectDoesNotExist:
-            context = json.dumps({"error": "Bad ID"})
-            status=404
-            return HttpResponse(context, status = status)
-        
-        tasks = models.Task.objects.filter(project_instance = project_instance)
-        all_tasks = []
-        for task in tasks:
-            proj_dict = task.dict_with_convert_time_field_to_json()
-            all_tasks.append(proj_dict)
-        context = json.dumps(all_tasks)
+        response = get_all_tasks(project_id)
     if request.method == "POST":
-        try:
-            task_description = request.POST["description"]
-        except MultiValueDictKeyError:
-            context = json.dumps({"error": "Bad POST"})
-            status=422
-            return HttpResponse(context, status = status)
-            
-        try:
-            project_instance = models.Project.objects.get(id = project_id)
-        except ObjectDoesNotExist:
-            context = json.dumps({"error": "Bad ID"})
-            status=404
-            return HttpResponse(context, status = status)
-        
-        
-        if task_description is not "" and len(task_description) < 1000:
-            new_task = models.Task.objects.create(
-                project_instance = project_instance,
-                description = task_description,
-                priority = 0,
-            )
-            new_task.save()
-            context = new_task.dict_with_convert_time_field_to_json()
-        else:
-            context = json.dumps({"error": "Bad POST"})
-            status = 422
-            return HttpResponse(context, status=status)
-            
-    return HttpResponse(context)
-
-@decorators.login_required
-@csrf_exempt
-def project_task_endpoint(request, project_id, task_id):
-    if request.method == "GET":
-        try:
-            project_instance = models.Project.objects.get(id = project_id)
-        except ObjectDoesNotExist:
-            context = json.dumps({"error": "Bad ID"})
-            status=404
-            return HttpResponse(context, status = status)
-        
-        task = models.Task.objects.filter(project_instance = project_instance, id = task_id)[0]
-        context = json.dumps(task.dict_with_convert_time_field_to_json())
-    elif request.method == "POST":        
-        try:
-            description = request.POST["description"]
-            expire_date = request.POST["expire_date"]
-        except MultiValueDictKeyError:
-            context = json.dumps({"error": "Bad POST"})
-            status=422
-            return HttpResponse(context, status = status)
-
-        project_instance = models.Project.objects.get(id = project_id)
-        task = models.Task.objects.filter(project_instance = project_instance, id = task_id)[0]
-
-        if 0 < len(description) < 1000: 
-            task.description = description
-        else:
-            context = json.dumps({"error": "Bad POST"})
-            status = 422
-            return HttpResponse(context, status=status)
-        
-        if expire_date == "" :
-            expire_date = None
-        else:
-            expire_date = datetime.datetime.strptime(expire_date, JS_TIME_FORMAT)
-        task.expire_date = expire_date
-        
-        task.save()
-        
-        context = task.dict_with_convert_time_field_to_json()
-        
-    elif request.method == "DELETE":
-        try:
-            task_to_delete = models.Task.objects.get(pk = task_id)
-        except ObjectDoesNotExist:
-            context = json.dumps({"error": "Bad ID"})
-            status=404
-            return HttpResponse(context, status = status)
-        task_to_delete.delete()
-        context = json.dumps(task_to_delete.dict_with_convert_time_field_to_json())
-
-    return HttpResponse(context)
+        response = create_new_task(request.POST, project_id)
+    return HttpResponse(response)
     

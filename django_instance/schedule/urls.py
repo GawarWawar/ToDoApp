@@ -3,7 +3,8 @@ from . import views_old
 
 from schedule.views.project_endpoints import project_endpoint
 from schedule.views.projects_endpoints import projects_endpoint
-from schedule.views.tasks_endpoints import project_task_endpoint, project_tasks_endpoint
+from schedule.views.task_endpoints import project_task_endpoint
+from schedule.views.tasks_endpoints import project_tasks_endpoint
 
 
 urlpatterns = [
