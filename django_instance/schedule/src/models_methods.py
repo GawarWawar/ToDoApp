@@ -15,7 +15,7 @@ class ModelsWithTimeFIelds(ModelsUtils):
         else:
             return None
         
-    def convert_time_field_to_json(self,  TIME_FORMAT = JS_TIME_FORMAT):
+    def dict_with_convert_time_field_to_json(self,  TIME_FORMAT = JS_TIME_FORMAT):
         self_dict_to_json = self.to_dict()
         for key in self_dict_to_json:
             if "date" in key:

@@ -22,10 +22,10 @@ def get_users_projects(request):
     all_tasks = []
     for project in projects:
         tasks = models.Task.objects.filter(project_instance = project)
-        proj_dict = project.convert_time_field_to_json()
+        proj_dict = project.dict_with_convert_time_field_to_json()
         proj_dict["tasks"] = []
         for task in tasks:
-            task_dict = task.convert_time_field_to_json()
+            task_dict = task.dict_with_convert_time_field_to_json()
             proj_dict["tasks"].append(task_dict)
         all_tasks.append(proj_dict)
     task_collection_json = json.dumps(all_tasks)
@@ -38,7 +38,7 @@ def projects_endpoint(request):
         projects = models.Project.objects.filter(user_instance = request.user)
         all_projects = []
         for project in projects:
-            proj_dict = project.convert_time_field_to_json()
+            proj_dict = project.dict_with_convert_time_field_to_json()
             all_projects.append(proj_dict)
         context = json.dumps(all_projects)
     
@@ -65,7 +65,7 @@ def projects_endpoint(request):
             expire_date = expire_date
         )
         new_project.save()
-        context = new_project.convert_time_field_to_json()
+        context = new_project.dict_with_convert_time_field_to_json()
         
     return HttpResponse(context)
         
@@ -79,7 +79,7 @@ def project_endpoint(request, project_id):
             context = json.dumps({"error": "Bad ID"})
             status=404
             return HttpResponse(context, status = status)
-        context = json.dumps(project.convert_time_field_to_json())
+        context = json.dumps(project.dict_with_convert_time_field_to_json())
     elif request.method == "POST":
         try:
             name = request.POST["name"]
@@ -111,7 +111,7 @@ def project_endpoint(request, project_id):
         
         project.save()
         
-        context = project.convert_time_field_to_json()
+        context = project.dict_with_convert_time_field_to_json()
         
     elif request.method == "DELETE":
         try:
@@ -121,7 +121,7 @@ def project_endpoint(request, project_id):
             status=404
             return HttpResponse(context, status = status)
         project_to_delete.delete()
-        context = json.dumps(project_to_delete.convert_time_field_to_json())
+        context = json.dumps(project_to_delete.dict_with_convert_time_field_to_json())
         
     return HttpResponse(context)
 
@@ -139,7 +139,7 @@ def project_tasks_endpoint(request, project_id):
         tasks = models.Task.objects.filter(project_instance = project_instance)
         all_tasks = []
         for task in tasks:
-            proj_dict = task.convert_time_field_to_json()
+            proj_dict = task.dict_with_convert_time_field_to_json()
             all_tasks.append(proj_dict)
         context = json.dumps(all_tasks)
     if request.method == "POST":
@@ -165,7 +165,7 @@ def project_tasks_endpoint(request, project_id):
                 priority = 0,
             )
             new_task.save()
-            context = new_task.convert_time_field_to_json()
+            context = new_task.dict_with_convert_time_field_to_json()
         else:
             context = json.dumps({"error": "Bad POST"})
             status = 422
@@ -185,7 +185,7 @@ def project_task_endpoint(request, project_id, task_id):
             return HttpResponse(context, status = status)
         
         task = models.Task.objects.filter(project_instance = project_instance, id = task_id)[0]
-        context = json.dumps(task.convert_time_field_to_json())
+        context = json.dumps(task.dict_with_convert_time_field_to_json())
     elif request.method == "POST":        
         try:
             description = request.POST["description"]
@@ -213,7 +213,7 @@ def project_task_endpoint(request, project_id, task_id):
         
         task.save()
         
-        context = task.convert_time_field_to_json()
+        context = task.dict_with_convert_time_field_to_json()
         
     elif request.method == "DELETE":
         try:
@@ -223,7 +223,7 @@ def project_task_endpoint(request, project_id, task_id):
             status=404
             return HttpResponse(context, status = status)
         task_to_delete.delete()
-        context = json.dumps(task_to_delete.convert_time_field_to_json())
+        context = json.dumps(task_to_delete.dict_with_convert_time_field_to_json())
 
     return HttpResponse(context)
     
