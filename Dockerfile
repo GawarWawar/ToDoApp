@@ -18,6 +18,10 @@ RUN pip install --upgrade pip && \
 # Install any needed packages specified in requirements.txt
 RUN ls
 
+# Run collectstatic to gather static files
+VOLUME /django_instance/static
+RUN python /django_instance/manage.py collectstatic --noinput
+
 # Expose port 8000 to the outside world
 EXPOSE 8000
 
