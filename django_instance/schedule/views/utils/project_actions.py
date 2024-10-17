@@ -41,30 +41,17 @@ def create_new_project(project_info:dict, user: User):
     new_project.save()
     return HttpResponse(json.dumps(new_project.dict_with_convert_time_field_to_json()))
 
-def get_project(project_id: int):
-    try:
-        project = models.Project.objects.get(id = project_id)
-    except ObjectDoesNotExist:
-        return HttpResponse(
-            json.dumps({"error": "Bad ID"}), 
-            status = 404
-        )
-    else:
+def get_project(project: models.Project):
         return HttpResponse(
             json.dumps(project.dict_with_convert_time_field_to_json())
         )
         
-def edit_project(project_id:int, project_info: dict):
+def edit_project(project:models.Project, project_info: dict):
     try:
         name = project_info["name"]
         expire_date = project_info["expire_date"]
     except MultiValueDictKeyError:
         return HttpResponse(json.dumps({"error": "Bad POST"}), status = 422)
-    
-    try:
-        project = models.Project.objects.get(id = project_id)
-    except ObjectDoesNotExist:
-        return HttpResponse(json.dumps({"error": "Bad ID"}), status = 404)
 
     if 0 < len(name) <= 100: 
         project.name = name
@@ -80,11 +67,7 @@ def edit_project(project_id:int, project_info: dict):
     project.save()
     return HttpResponse(project.dict_with_convert_time_field_to_json())
 
-def delete_project(project_id:int):
-    try:
-        project_to_delete = models.Project.objects.get(pk = project_id)
-    except ObjectDoesNotExist:
-        return HttpResponse(json.dumps({"error": "Bad ID"}), status = 404)
-    response = HttpResponse(json.dumps(project_to_delete.dict_with_convert_time_field_to_json()))
-    project_to_delete.delete()
+def delete_project(project:models.Project):
+    response = HttpResponse(json.dumps(project.dict_with_convert_time_field_to_json()))
+    project.delete()
     return response

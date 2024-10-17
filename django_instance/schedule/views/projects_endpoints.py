@@ -8,9 +8,7 @@ decorators.login_required
 @csrf_exempt
 def projects_endpoint(request):
     if request.method == "GET":
-        response = get_all_projects(request.user)
+         return HttpResponse(get_all_projects(request.user))
     
     elif request.method == "POST":
-        response = create_new_project(request.POST, request.user)
-        
-    return HttpResponse(response)
+         return HttpResponse(create_new_project(request.POST, request.user))
