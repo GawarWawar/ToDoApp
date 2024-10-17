@@ -6,26 +6,26 @@ from django.core.exceptions import ObjectDoesNotExist
 import json
 
 from schedule import models
-from .utils.task_actions import get_task, edit_task, delete_task 
+from .utils.task_actions import get_task, edit_task, delete_task
 
 
 @decorators.login_required
 @csrf_exempt
 def project_task_endpoint(request, project_id, task_id):
     try:
-        project = models.Project.objects.get(id = project_id)
-        task = models.Task.objects.get(id = task_id)
+        models.Project.objects.get(id=project_id)
+        task = models.Task.objects.get(id=task_id)
     except ObjectDoesNotExist:
-        return HttpResponse(json.dumps({"error": "Bad ID"}), status = 404)
-    
+        return HttpResponse(json.dumps({"error": "Bad ID"}), status=404)
+
     if request.method == "GET":
         return HttpResponse(get_task(task))
-    elif request.method == "POST":     
-        try:   
+    elif request.method == "POST":
+        try:
             task_info = json.loads(request.body)
         except json.decoder.JSONDecodeError:
             task_info = request.POST
-            
+
         return HttpResponse(edit_task(task, task_info))
     elif request.method == "DELETE":
         return HttpResponse(delete_task(task))
