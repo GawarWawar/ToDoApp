@@ -10,36 +10,23 @@ import json
 from django_instance.settings import JS_TIME_FORMAT
 from schedule import models
 
-def get_all_tasks(project_id:int):
-    try:
-        project_instance = models.Project.objects.get(id = project_id)
-    except ObjectDoesNotExist:
-        return HttpResponse(json.dumps({"error": "Bad ID"}), status = 404)
-    
-    tasks = models.Task.objects.filter(project_instance = project_instance)
+def get_all_tasks(project:models.Project):    
+    tasks = models.Task.objects.filter(project_instance = project)
     all_tasks = []
     for task in tasks:
         proj_dict = task.dict_with_convert_time_field_to_json()
         all_tasks.append(proj_dict)
     return HttpResponse(json.dumps(all_tasks))
 
-def create_new_task(task_info:dict, project_id:int):
+def create_new_task(task_info:dict, project:models.Project):
     try:
         task_description = task_info["description"]
     except MultiValueDictKeyError:
         return HttpResponse(json.dumps({"error": "Bad POST"}), status = 422)
         
-    try:
-        project_instance = models.Project.objects.get(id = project_id)
-    except ObjectDoesNotExist:
-        context = json.dumps({"error": "Bad ID"})
-        status=404
-        return HttpResponse(context, status = status)
-    
-    
     if task_description != "" and len(task_description) < 1000:
         new_task = models.Task.objects.create(
-            project_instance = project_instance,
+            project_instance = project,
             description = task_description,
             priority = 0,
         )
