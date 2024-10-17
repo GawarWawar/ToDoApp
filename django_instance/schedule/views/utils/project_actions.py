@@ -85,5 +85,6 @@ def delete_project(project_id:int):
         project_to_delete = models.Project.objects.get(pk = project_id)
     except ObjectDoesNotExist:
         return HttpResponse(json.dumps({"error": "Bad ID"}), status = 404)
+    response = HttpResponse(json.dumps(project_to_delete.dict_with_convert_time_field_to_json()))
     project_to_delete.delete()
-    return HttpResponse(json.dumps(project_to_delete.dict_with_convert_time_field_to_json()))
+    return response
