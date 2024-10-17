@@ -1,0 +1,21 @@
+version: '3.8'
+
+services:
+  django:
+    build: .
+    container_name: django_app
+    command: python /django_instance/manage.py runserver 0.0.0.0:8000
+    volumes:
+      - ./django_instance:/django_instance
+    ports:
+      - "8000:8000"
+    depends_on:
+      - migrations
+    
+  migrations:
+    build: .
+    container_name: django_migrations
+    command: >
+      sh -c "python /django_instance/manage.py migrate"
+    volumes:
+      - ./django_instance:/django_instance
