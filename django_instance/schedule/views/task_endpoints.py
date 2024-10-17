@@ -19,8 +19,8 @@ def project_task_endpoint(request, project_id, task_id):
         return HttpResponse(json.dumps({"error": "Bad ID"}), status = 404)
     
     if request.method == "GET":
-        HttpResponse(get_task(task))
-    elif request.method == "POST":        
-        HttpResponse(edit_task(task, request.POST))
+        return HttpResponse(get_task(task))
+    elif request.method == "POST":     
+        return HttpResponse(edit_task(task, task_info))
     elif request.method == "DELETE":
-        HttpResponse(delete_task(task))
+        return HttpResponse(delete_task(task))
