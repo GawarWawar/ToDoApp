@@ -31,7 +31,7 @@
   - `> docker-compose up --build`
   - After that site will be ready to use
 - 2nd: Using python:
-  - Clone git from https://github.com/GawarWawar/RenovateHub_project
+  - Clone git from https://github.com/GawarWawar/ToDoApp
   - `python -m venv env` - to create virtual environment;
   - `source/evn/bin/activate` - to activate virtual environment;
   - `cd django_instance` - get into working directory;
