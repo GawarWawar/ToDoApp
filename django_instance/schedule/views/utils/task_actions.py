@@ -24,7 +24,7 @@ def create_new_task(task_info: dict, project: models.Project):
     try:
         task_description = task_info["description"]
     except MultiValueDictKeyError:
-        return HttpResponse(json.dumps({"error": "Bad POST"}), status=422)
+        return {"error": "Bad POST"}, 422
 
     if task_description != "" and len(task_description) < 1000:
         new_task = models.Task.objects.create(
@@ -33,9 +33,9 @@ def create_new_task(task_info: dict, project: models.Project):
             priority=0,
         )
         new_task.save()
-        return HttpResponse(new_task.dict_with_convert_time_field_to_json())
+        return {"task": new_task.dict_with_convert_time_field_to_json()}, None
     else:
-        return HttpResponse(json.dumps({"error": "Bad POST"}), status=422)
+        return {"error": "Bad POST"}, 422
 
 
 def get_task(task: models.Task):

@@ -14,7 +14,7 @@
         <div class="col-1"></div>
         <!-- Col with name of project to add task -->
         <div class="col col-md-9">
-    {{project.name}}
+          {{project.name}}
         </div>
         <!-- Col with buttons to edit and delete project-->
         <div class="col-sm-2"></div>
@@ -22,6 +22,8 @@
     <!-- Row Form to add task -->
     <form 
     class="row"
+        hx-post={% url "create_task_for_project" project.id %} 
+        hx-target="#task_list" hx-swap="afterend"
     >
 
         <!-- Col with icon -->

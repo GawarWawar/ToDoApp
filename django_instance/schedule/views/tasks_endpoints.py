@@ -22,4 +22,7 @@ def project_tasks_endpoint(request, project_id):
         
         return render(request, "project_tasks.html", tasks)
     if request.method == "POST":
-        return HttpResponse(create_new_task(request.POST, project))
+        status = None
+        task, status = create_new_task(request.POST, project)
+        
+        return render(request, "task_id.html", task, status=status)
