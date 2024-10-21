@@ -33,16 +33,19 @@ def project_task_endpoint(request, project_id, task_id):
 @decorators.login_required
 @csrf_exempt
 def task_endpoint(request, task_id):
-    try:
-        task = models.Task.objects.get(id=task_id)
-    except ObjectDoesNotExist:
-        return HttpResponse(json.dumps({"error": "Bad ID"}), status=404)
-
     if request.method == "GET":
+        try:
+            task = models.Task.objects.get(id=task_id)
+        except ObjectDoesNotExist:
+            return HttpResponse(json.dumps({"error": "Bad ID"}), status=404)
         task_details = {"task": get_task(task)}
         return render(request, "task_id.html", context=task_details)
     
     elif request.method == "POST":
+        try:
+            task = models.Task.objects.get(id=task_id)
+        except ObjectDoesNotExist:
+            return HttpResponse(json.dumps({"error": "Bad ID"}), status=404)
         try:
             task_info = json.loads(request.body)
         except json.decoder.JSONDecodeError:
@@ -50,4 +53,8 @@ def task_endpoint(request, task_id):
 
         return HttpResponse(edit_task(task, task_info))
     elif request.method == "DELETE":
+        try:
+            task = models.Task.objects.get(id=task_id)
+        except ObjectDoesNotExist:
+            return HttpResponse(json.dumps({"error": "Bad ID"}), status=404)
         return HttpResponse(delete_task(task))
