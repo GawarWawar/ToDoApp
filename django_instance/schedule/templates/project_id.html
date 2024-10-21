@@ -10,7 +10,6 @@
 <body>
     {{project.name}}
     <div
-        {% comment %} hx-get={% url "project_tasks" project.id %} hx-trigger="load" {% endcomment %}
     >
       {% for task_id in project.tasks %}
         <div hx-get={% url "task_details" task_id%} hx-trigger="load"> </div>
