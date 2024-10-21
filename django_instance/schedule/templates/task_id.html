@@ -8,6 +8,19 @@
     <script src="https://unpkg.com/htmx.org@2.0.3" integrity="sha384-0895/pl2MU10Hqc6jd4RvrthNlDiE9U1tWmX7WRESftEDRosgxNsQG/Ze9YMRzHq" crossorigin="anonymous"></script>
 </head>
 <body>
-    {{task}}
+    <div class="row">
+        <!-- Checkbox column -->
+        <div class="col-1"></div>
+        <!-- Description column -->
+        <div class="col col-md-9">
+            {{task.description}}
+        </div>
+        <!-- Buttons columnm -->
+        <div class="col-md-2 col-xs-3">
+            <button></button>
+            <button></button>
+            <button></button>
+        </div>
+    </div>
 </body>
 </html>
