@@ -16,7 +16,9 @@ def get_all_projects(user: User):
     for project in projects:
         proj_dict = project.dict_with_convert_time_field_to_json()
         all_projects.append(proj_dict)
-    return HttpResponse(json.dumps(all_projects))
+        
+    projects = {"projects": all_projects}
+    return projects
 
 
 def create_new_project(project_info: dict, user: User):
@@ -42,7 +44,16 @@ def create_new_project(project_info: dict, user: User):
 
 
 def get_project(project: models.Project):
-    return HttpResponse(json.dumps(project.dict_with_convert_time_field_to_json()))
+    project_dict = project.dict_with_convert_time_field_to_json()
+    tasks = models.Task.objects.filter(project_instance=project)
+    
+    project_tasks = []
+    for task in tasks:
+        project_tasks.append(task.id)
+        
+    project_dict["tasks"] = project_tasks
+    
+    return project_dict
 
 
 def edit_project(project: models.Project, project_info: dict):

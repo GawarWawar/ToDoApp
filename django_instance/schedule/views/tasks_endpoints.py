@@ -1,6 +1,6 @@
 from allauth.account import decorators
 
-from django.shortcuts import HttpResponse
+from django.shortcuts import HttpResponse, render
 from django.views.decorators.csrf import csrf_exempt
 from django.core.exceptions import ObjectDoesNotExist
 import json
@@ -18,6 +18,8 @@ def project_tasks_endpoint(request, project_id):
         return HttpResponse(json.dumps({"error": "Bad ID"}), status=404)
 
     if request.method == "GET":
-        return HttpResponse(get_all_tasks(project))
+        tasks = get_all_tasks(project)
+        
+        return render(request, "project_tasks.html", tasks)
     if request.method == "POST":
         return HttpResponse(create_new_task(request.POST, project))

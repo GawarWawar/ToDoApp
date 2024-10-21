@@ -15,7 +15,9 @@ def get_all_tasks(project: models.Project):
     for task in tasks:
         proj_dict = task.dict_with_convert_time_field_to_json()
         all_tasks.append(proj_dict)
-    return HttpResponse(json.dumps(all_tasks))
+        
+    tasks_dict = {"tasks":all_tasks}
+    return tasks_dict
 
 
 def create_new_task(task_info: dict, project: models.Project):
@@ -37,7 +39,8 @@ def create_new_task(task_info: dict, project: models.Project):
 
 
 def get_task(task: models.Task):
-    HttpResponse(json.dumps(task.dict_with_convert_time_field_to_json()))
+    
+    return task.dict_with_convert_time_field_to_json()
 
 
 def edit_task(task: models.Task, task_info: dict):
