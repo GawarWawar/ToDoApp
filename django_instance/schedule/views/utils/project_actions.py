@@ -44,16 +44,7 @@ def create_new_project(project_info: dict, user: User):
 
 
 def get_project(project: models.Project):
-    project_dict = project.dict_with_convert_time_field_to_json()
-    tasks = models.Task.objects.filter(project_instance=project)
-    
-    project_tasks = []
-    for task in tasks:
-        project_tasks.append(task.id)
-        
-    project_dict["tasks"] = project_tasks
-    
-    return project_dict
+    return project.to_dict_with_tasks()
 
 
 def edit_project(project: models.Project, project_info: dict):

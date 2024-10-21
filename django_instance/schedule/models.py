@@ -27,6 +27,20 @@ class Project(models.Model, models_methods.ModelsWithTimeFIelds):
             "creation_date": self.creation_date,
             "expire_date": self.expire_date,
         }
+        
+    def to_dict_with_tasks(self, only_task_id = False) -> dict[str]:
+        self_dict = self.dict_with_convert_time_field_to_json()
+        
+        self_dict["tasks"] = []
+        for task in Task.objects.filter(project_instance=self):
+            if only_task_id:
+                self_dict["tasks"].append(task.id)
+            else:
+                self_dict["tasks"].append(
+                    task.dict_with_convert_time_field_to_json()
+                )
+
+        return self_dict
 
     def __str__(self):
         return self.name

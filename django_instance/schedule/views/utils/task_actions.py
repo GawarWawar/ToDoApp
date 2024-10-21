@@ -8,7 +8,7 @@ import json
 from django_instance.settings import JS_TIME_FORMAT
 from schedule import models
 
-
+#depricated(included in project_details (project returns with tasks)))
 def get_all_tasks(project: models.Project):
     tasks = models.Task.objects.filter(project_instance=project)
     all_tasks = []
