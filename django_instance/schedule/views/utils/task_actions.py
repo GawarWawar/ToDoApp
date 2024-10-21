@@ -74,7 +74,7 @@ def edit_task(task: models.Task, task_info: dict):
     return HttpResponse(task.dict_with_convert_time_field_to_json())
 
 
-def delete_task(task: models.Task):
-    respnse = HttpResponse(json.dumps(task.dict_with_convert_time_field_to_json()))
+def delete_task(task: models.Task) -> None:
+    task_dict = task.dict_with_convert_time_field_to_json()
     task.delete()
-    return respnse
+    return task_dict
