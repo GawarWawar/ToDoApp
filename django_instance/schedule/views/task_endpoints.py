@@ -57,7 +57,13 @@ def task_endpoint(request, task_id):
         try:
             task = models.Task.objects.get(id=task_id)
         except ObjectDoesNotExist:
-            return render(request, "task_change_confirm.html", {"error": "Bad ID", "message": "Could not delete task with this id"})
+            return render(
+                request, "task_change_confirm.html", 
+                {
+                    "error": "Bad ID", 
+                    "message": "Could not delete task with this id"
+                }
+            )
         
         task_dict = delete_task(task)
         return render(

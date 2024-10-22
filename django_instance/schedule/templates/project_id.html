@@ -21,7 +21,7 @@
     </header>
     <!-- Row Form to add task -->
     <form 
-    class="row"
+        class="row"
         hx-post={% url "create_task_for_project" project.id %} 
         hx-target="#task_list" hx-swap="afterend"
     >
