@@ -1,0 +1,37 @@
+
+<form
+    class='container' id="add_form"
+    hx-post={% url "new_project" %}
+    hx-target="#project_list"
+    hx-swap="beforeend"
+>
+<!-- Buttons open more detailed form to fill before creatin -->
+    <div class="row">
+        <button
+            class="btn btn-primary col"
+            hx-get={% url "add_button" %}
+            hx-target="#add_form"
+            hx-swap="outerHTML"
+        >
+            Close
+        </button>
+    </div>    
+    <div class="row">
+        <div class="col">Name</div>
+        <div class="col">Expire Date (optional)</div>
+    </div>
+    <div class="row">
+        <div class="col">
+            <input type="text" name="name" placeholder="PlaceHorlder" />
+        </div>
+        <div class="col">
+            <input type="datetime-local" name="expire_date" />
+        </div>
+    </div>
+    <div class="row ">
+        <button
+            class="btn btn-primary"
+            type="submit"
+        >Add TODO List</button>
+    </div>
+</form>

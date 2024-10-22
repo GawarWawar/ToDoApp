@@ -16,9 +16,16 @@
     <div 
       hx-get={% url "projects" %}
       hx-trigger="load"
+      id="project_list"
     >
       
     </div>
-
+    <div 
+      hx-get={% url "add_button" %}
+      hx-trigger="load"
+      hx-target="this"
+      hx-swap="outerHTML"
+    > 
+    </div>
   </body>
 </html>

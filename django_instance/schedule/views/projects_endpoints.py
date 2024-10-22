@@ -12,4 +12,5 @@ def projects_endpoint(request):
         return render(request, "get_all_projects.html", projects)
 
     elif request.method == "POST":
-        return HttpResponse(create_new_project(request.POST, request.user))
+        new_project = create_new_project(request.POST, request.user)
+        return render(request, "project_id.html", {"project": new_project})

@@ -26,7 +26,7 @@ def create_new_project(project_info: dict, user: User):
         name = project_info["name"]
         expire_date = project_info["expire_date"]
     except MultiValueDictKeyError:
-        return HttpResponse(json.dumps({"error": "Bad POST"}), status=422)
+        return ({"error": "Bad POST"}, 422)
 
     if name == "":
         name = "PlaceHolder"
@@ -40,7 +40,7 @@ def create_new_project(project_info: dict, user: User):
         user_instance=user, name=name, expire_date=expire_date
     )
     new_project.save()
-    return HttpResponse(json.dumps(new_project.dict_with_convert_time_field_to_json()))
+    return new_project.dict_with_convert_time_field_to_json()
 
 
 def get_project(project: models.Project):
