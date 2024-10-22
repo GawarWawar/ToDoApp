@@ -70,6 +70,6 @@ def edit_project(project: models.Project, project_info: dict):
 
 
 def delete_project(project: models.Project):
-    response = HttpResponse(json.dumps(project.dict_with_convert_time_field_to_json()))
+    project_dict = project.dict_with_convert_time_field_to_json()
     project.delete()
-    return response
+    return project_dict

@@ -25,4 +25,12 @@ def project_endpoint(request, project_id):
         return HttpResponse(edit_project(project, request.POST))
 
     elif request.method == "DELETE":
-        return HttpResponse(delete_project(project))
+        project_dict = delete_project(project)
+        
+        return render(
+            request, "after_delete_form.html", 
+            {
+                "message": f"TODO list with name: \n {project.name} \n was deleted",
+                "project": project_dict
+            }
+        ) 
