@@ -13,6 +13,9 @@
         <div class="col-1"></div>
         <!-- Description column -->
         <div class="col col-md-9">
+            {% if error %}
+            {{message}}
+            {% endif %}
             {{task.description}}
         </div>
         <!-- Buttons columnm -->
