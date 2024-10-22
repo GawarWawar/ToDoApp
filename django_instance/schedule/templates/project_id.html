@@ -23,7 +23,7 @@
     <form 
         class="row"
         hx-post={% url "create_task_for_project" project.id %} 
-        hx-target="#task_list" hx-swap="afterend"
+        hx-target="#task_list_{{project.id}}" hx-swap="afterend"
     >
 
         <!-- Col with icon -->
@@ -41,12 +41,12 @@
         </button>
     </form>
     <!-- Container for tasks-->
-    <div id="task_list" clas="container">
+    <div id="task_list_{{project.id}}" clas="container">
       {% for task in project.tasks %}
         <div 
             hx-get={% url "task_details" task.id%} 
             hx-trigger="load"
-            hx-target="#task_list" 
+            hx-target="#task_list_{{project.id}}" 
             hx-swap="afterend"
         > 
         </div>
