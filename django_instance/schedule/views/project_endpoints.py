@@ -1,5 +1,6 @@
 from allauth.account import decorators
 
+from django.http import QueryDict
 from django.shortcuts import HttpResponse, render
 from django.views.decorators.csrf import csrf_exempt
 from django.core.exceptions import ObjectDoesNotExist
@@ -8,9 +9,7 @@ import json
 from schedule import models
 from .utils.project_actions import get_project, edit_project, delete_project
 
-decorators.login_required
-
-
+@decorators.login_required
 @csrf_exempt
 def project_endpoint(request, project_id):
     try:
@@ -21,8 +20,11 @@ def project_endpoint(request, project_id):
     if request.method == "GET":
         return render(request, "project_id.html", {"project": get_project(project)})
 
-    elif request.method == "POST":
-        return HttpResponse(edit_project(project, request.POST))
+    elif request.method == "PUT":
+        project_info = QueryDict(request.body)
+
+        project_after_edit = edit_project(project, project_info)
+        return render(request, "project_id.html", {"project": project_after_edit})
 
     elif request.method == "DELETE":
         project_dict = delete_project(project)
@@ -34,3 +36,11 @@ def project_endpoint(request, project_id):
                 "project": project_dict
             }
         ) 
+
+@decorators.login_required
+@csrf_exempt
+def get_edit_form(request, project_id):
+    if request.method == "GET":
+        project = models.Project.objects.get(id=project_id)
+        project = get_project(project)
+        return render(request, "project_edit.html", {"project": project})

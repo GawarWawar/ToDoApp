@@ -52,21 +52,21 @@ def edit_project(project: models.Project, project_info: dict):
         name = project_info["name"]
         expire_date = project_info["expire_date"]
     except MultiValueDictKeyError:
-        return HttpResponse(json.dumps({"error": "Bad POST"}), status=422)
+        return ({"error": "Bad POST"}, 422)
 
     if 0 < len(name) <= 100:
         project.name = name
     else:
-        return HttpResponse(json.dumps({"error": "Bad POST"}), status=422)
+        return ({"error": "Bad POST"}, 422)
 
-    if expire_date == "":
+    if expire_date == "" or expire_date == "None" or expire_date is None:
         expire_date = None
     else:
         expire_date = datetime.datetime.strptime(expire_date, JS_TIME_FORMAT)
     project.expire_date = expire_date
 
     project.save()
-    return HttpResponse(project.dict_with_convert_time_field_to_json())
+    return project.dict_with_convert_time_field_to_json()
 
 
 def delete_project(project: models.Project):
