@@ -52,14 +52,14 @@ def edit_task(task: models.Task, task_info: dict):
         if 0 < len(description) < 1000:
             task.description = description
         else:
-            return HttpResponse(json.dumps({"error": "Bad POST"}), status=422)
+            return ({"error": "Bad POST"}, 422)
 
     try:
         expire_date = task_info["expire_date"]
     except MultiValueDictKeyError:
         expire_date = task.expire_date
     else:
-        if expire_date == "" or expire_date is None:
+        if expire_date == "" or expire_date == "None" or expire_date is None:
             expire_date = None
         else:
             expire_date = datetime.datetime.strptime(expire_date, JS_TIME_FORMAT)
@@ -71,7 +71,7 @@ def edit_task(task: models.Task, task_info: dict):
         pass
 
     task.save()
-    return HttpResponse(task.dict_with_convert_time_field_to_json())
+    return task.dict_with_convert_time_field_to_json()
 
 
 def delete_task(task: models.Task) -> None:
