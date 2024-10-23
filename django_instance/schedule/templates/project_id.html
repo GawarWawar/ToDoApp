@@ -42,7 +42,7 @@
         <form 
             class="row"
             hx-post={% url "create_task_for_project" project.id %} 
-            hx-target="#task_list_{{project.id}}" hx-swap="afterend"
+            hx-target="#task_list_{{project.id}}" hx-swap="beforeend"
         >
 
             <!-- Col with icon -->
