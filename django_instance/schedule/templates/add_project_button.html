@@ -1,9 +1,14 @@
-<div class="container d-flex align-self-center justify-content-center" id="add_button">
-    <!-- Project Create button -->
-    <button
-        class="btn btn-primary"
-        hx-get={% url "add_form" %}
-        hx-target="#add_button"
-        hx-swap="outerHTML"
-    >Add TODO List</button> 
-</div>
+<!DOCTYPE html>
+<html lang="en">
+<body>
+    <div class="container d-flex align-self-center justify-content-center" id="add_button">
+        <!-- Project Create button -->
+        <button
+            class="btn btn-primary"
+            hx-get={% url "add_form" %}
+            hx-target="#add_button"
+            hx-swap="outerHTML"
+        >Add TODO List</button> 
+    </div>
+</body>
+</html>
