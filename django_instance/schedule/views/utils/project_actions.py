@@ -66,7 +66,7 @@ def edit_project(project: models.Project, project_info: dict):
     project.expire_date = expire_date
 
     project.save()
-    return project.dict_with_convert_time_field_to_json()
+    return get_project(project)
 
 
 def delete_project(project: models.Project):
