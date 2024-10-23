@@ -1,7 +1,15 @@
 <!DOCTYPE html>
 <html lang="en">
 <body>
-    <div class="row task-container" id="task_body_{{task.id}}">
+    <div 
+        class="row task-container edit" 
+        style="background: #fcfed5;"
+        id="task_body_{{task.id}}"
+        x-data="{bgcolor: ''}"
+        x-bind:style="{background: bgcolor}"
+        @mouseenter="bgcolor = '#fcfed5'"
+        @mouseleave="bgcolor = ''"
+    >
         <!-- Checkbox column -->
         <div class="col-1 d-flex justify-content-center task-checkbox ">
             <butto class="btn">
@@ -33,11 +41,11 @@
         <!-- Buttons columnm -->
         <div class="col-md col-xs-3 d-flex justify-content-center align-content-center align-items-center flex-row task-buttons">
             <button
-            hx-get={% url "task_details" task.id%}
-            hx-target="#task_body_{{task.id}}"
-            hx-swap="outerHTML"
-
-            class="btn btn-warning"
+                hx-get={% url "task_details" task.id%}
+                hx-target="#task_body_{{task.id}}"
+                hx-swap="outerHTML"
+            
+                class="btn btn-warning"
             >
             Cancel
             </button>
