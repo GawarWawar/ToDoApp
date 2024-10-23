@@ -67,7 +67,13 @@
         </button>
     </form>
     <!-- Container for tasks-->
-    <div id="task_list_{{project.id}}" clas="row">
+    <form 
+        id="task_list_{{project.id}}" 
+        clas="row" 
+        hx-post={% url "sort_project" project.id %} 
+        hx-trigger="end" 
+        hx-swap="none"
+    >
       {% for task in project.tasks %}
         <div 
             hx-get={% url "task_details" task.id%} 
@@ -77,7 +83,10 @@
         > 
         </div>
       {% endfor %}
-    </div>
+    </form>
+    <script>
+        Sortable.create(task_list_{{project.id}});
+    </script>
 </div>
 </body>
 </html>

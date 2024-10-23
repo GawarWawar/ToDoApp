@@ -1,6 +1,6 @@
 from django.urls import path
 
-from schedule.views.project_endpoints import project_endpoint, get_edit_form as get_project_edit_form
+from schedule.views.project_endpoints import project_endpoint, get_edit_form as get_project_edit_form, sort_project
 from schedule.views.projects_endpoints import projects_endpoint
 from schedule.views.project_utils_endpoints import get_add_form, get_add_button
 from schedule.views.task_endpoints import task_endpoint, get_edit_form as get_task_edit_form
@@ -14,6 +14,7 @@ urlpatterns = [
     path("projects/utils/get_add_button",  get_add_button, name="add_button"),
     
     path('projects/<project_id>', project_endpoint, name="project_details"),
+    path('projects/<project_id>/sort', sort_project, name="sort_project"),
     path("projects/<project_id>/edit/start/", get_project_edit_form, name="start_edit_project"),
     path("projects/<project_id>/edit/submit/", project_endpoint, name="submit_edit_project"),
     path('projects/<project_id>/delete', project_endpoint, name="delete_project"),

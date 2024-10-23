@@ -44,3 +44,16 @@ def get_edit_form(request, project_id):
         project = models.Project.objects.get(id=project_id)
         project = get_project(project)
         return render(request, "project_edit.html", {"project": project})
+    
+@decorators.login_required
+@csrf_exempt
+def sort_project (request, project_id):
+    if request.method == "POST":
+        project = models.Project.objects.get(id=project_id)    
+        task_list = request.POST.getlist("priority_by_id")
+        for priority, task_id in enumerate(task_list):
+            task = models.Task.objects.get(id=task_id)
+            task.priority = priority
+            task.save()
+        
+    return render(request, "project_id.html", {"project": project.to_dict_with_tasks()})
