@@ -1,17 +1,17 @@
 <!DOCTYPE html>
 <html lang="en">
 <body>
-    <div class="container" id="project_body_{{project.id}}">
+    <div class="container my-3 project-container rounded-bottom-5" id="project_body_{{project.id}}">
         <!-- Row header -->
-        <header class="row" id="project_header_{{project.id}}">
+        <header class="row project-header border border-dark" id="project_header_{{project.id}}">
             <!-- Col with icon -->
             <div class="col-1"></div>
             <!-- Col with name of project -->
-            <div class="col col-md-9">
+            <div class="col col-md-9 fs-4 my-2">
             {{project.name}}
             </div>
             <!-- Col with buttons to edit and delete project-->
-            <div class="col-sm-2">
+            <div class="col-sm-2 d-flex justify-content-center">
             <!-- Edit Project Button -->
                 <button
                     class="btn"
@@ -40,7 +40,7 @@
         </header>
         <!-- Row Form to add task -->
         <form 
-            class="row"
+            class="row project-taskformsection py-3 px-3 border border-secondary"
             hx-post={% url "create_task_for_project" project.id %} 
             hx-target="#task_list_{{project.id}}" hx-swap="beforeend"
         >
@@ -49,20 +49,20 @@
             <div class="col-sm-1"></div>
             <!-- Col with input field -->
             <input
-                class="col"
+                class="col col-xs-10 col-md-8 col-lg-9 pe-0 border border-secondary "
                 type="text"
                 name="description"
                 placeholder="Start typing here to create a task"
             >
             <!-- Col with button -->
-            <button class="btn btn-success col-sm-2" type="submit">
+            <button class="btn btn-success col-md col-xs-3 border border-secondary" type="submit">
                 Add Task
             </button>
         </form>
         <!-- Container for tasks-->
         <form 
             id="task_list_{{project.id}}" 
-            clas="row" 
+            clas="row project-taskcontainer" 
             hx-post={% url "sort_project" project.id %} 
             hx-trigger="end" 
             hx-swap="none"

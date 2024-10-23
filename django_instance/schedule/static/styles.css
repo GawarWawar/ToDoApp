@@ -1,29 +1,52 @@
+body, html, li, ul, form {
+    margin: unset;
+}
+
 .project-header{
     background-color: #3f6fad;
     color: white;
-    border: 1px solid black;
 }
 
-.project-form__container{
+.project-taskformsection{
     background-color: lightgrey;
 }
 
-.task-column{
-    border: 1px solid #efdcdf;
+.project-container{
     background-color: white;
-}
-
-.task-column__border-right__double {
-    border-right-style: double;
-    border-right-width: 6px;
-}
-
-.task-table{
-    background-color: white;
-    width: 100%;
-    
 }
 
 .background {
     background-image: linear-gradient(white, orange);
 }
+
+.task-checkbox{
+    border-right: 1px solid;
+    border-right-color: plum;
+}
+
+.task-descrition{
+    border-right: 0.5px solid;
+    border-right-color: #6c757d;
+
+    border-left: 1px solid;
+    border-left-color: plum;
+
+}
+
+.task-container{
+    border-top: 0.5px solid;
+    border-color: #6c757d;
+}
+
+@media (max-width: 768px) {
+    .task-descrition{
+        border-right-color: #6c757d;
+        margin-left: 5;
+    
+    }
+    .task-buttons{
+        border-top: 0.5px solid;
+        border-color: #6c757d;
+    }
+
+  }

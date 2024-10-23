@@ -1,11 +1,15 @@
 <!DOCTYPE html>
 <html lang="en">
 <body>
-    <div class="row" id="task_body_{{task.id}}">
+    <div class="row task-container" id="task_body_{{task.id}}">
         <!-- Checkbox column -->
-        <div class="col-1"></div>
+        <div class="col-1 d-flex justify-content-center task-checkbox ">
+            <butto class="btn">
+
+            </butto>
+        </div>
         <!-- Description column -->
-        <div class="col col-md-9">
+        <div class="col col-xs-10 col-md-8 col-lg-9 task-descrition ms-md-1 ">
             <form 
                 action="container form-control" 
                 hx-put={% url "submit_edit_task" task.id%} 
@@ -13,21 +17,21 @@
                 hx-target="#task_body_{{task.id}}"
                 hx-swap="outerHTML"
             >
-                    <div class="row-cols-1"> Description </div>
-                    <textarea class="row-col-1 form-control" type="text" name="description">{{task.description}}</textarea>
+                    <div class="row-cols-1 my-2"> Description </div>
+                    <textarea class="row-col-1 form-control my-2" type="text" name="description">{{task.description}}</textarea>
                     <div class="row-col-1"> Date in yyyy-mm-ddTHH:mm:ss format</div> <!--FIX THIS THROUGH ALPINE-->
                     <input 
                         type="text" 
                         type="date" 
                         name="expire_date" 
                         value={{task.expire_date}}
-                        class="row-col-1 form-control"
+                        class="row-col-1 form-control my-2"
                     />
-                    <button class="row-col-1 btn btn-success" type="submit">Confirm</button>
+                    <button class="row-col-1 btn btn-success my-2" type="submit">Confirm</button>
                 </div>
             </form>
         <!-- Buttons columnm -->
-        <div class="col-md-2 col-xs-3">
+        <div class="col-md col-xs-3 d-flex justify-content-center align-content-center align-items-center flex-row task-buttons">
             <button
             hx-get={% url "task_details" task.id%}
             hx-target="#task_body_{{task.id}}"
