@@ -67,6 +67,7 @@ class Task(models.Model, models_methods.ModelsWithTimeFIelds):
                 "id": self.project_instance.id,
             },
             "description": self.description,
+            "priority": self.priority,
             "creation_date": self.creation_date,
             "expire_date": self.expire_date,
             "is_completed": self.is_completed,
