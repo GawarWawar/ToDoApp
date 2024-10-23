@@ -42,6 +42,14 @@ class Project(models.Model, models_methods.ModelsWithTimeFIelds):
 
         return self_dict
 
+    def get_next_max_priority(self):
+        existing_tasks = Task.objects.filter(project_instance=self)
+        if not existing_tasks.exists():
+            return 0
+        else:
+            current_max = existing_tasks.aggregate(max_priority=models.Max("priority"))["max_priority"]
+            return current_max + 1
+
     def __str__(self):
         return self.name
 
@@ -75,3 +83,6 @@ class Task(models.Model, models_methods.ModelsWithTimeFIelds):
 
     def __str__(self):
         return self.description
+    
+    class Meta:
+        ordering=["priority"]

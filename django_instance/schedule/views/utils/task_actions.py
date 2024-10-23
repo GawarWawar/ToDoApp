@@ -27,10 +27,12 @@ def create_new_task(task_info: dict, project: models.Project):
         return {"error": "Bad POST"}, 422
 
     if task_description != "" and len(task_description) < 1000:
+        priority = project.get_next_max_priority()
+        
         new_task = models.Task.objects.create(
             project_instance=project,
             description=task_description,
-            priority=0,
+            priority=priority,
         )
         new_task.save()
         return {"task": new_task.dict_with_convert_time_field_to_json()}, None
