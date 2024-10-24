@@ -13,6 +13,7 @@ body, html, li, ul, form {
 
 .project-container{
     background-color: white;
+    overflow: hidden;
 }
 
 .background {
