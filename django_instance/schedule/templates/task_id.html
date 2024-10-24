@@ -19,14 +19,14 @@
             {% if task.is_completed is True %}
             <input type='hidden' name='is_completed' value="False"/>
             <input
-                class="my-auto mx-auto w-25 form-check-input"
+                class="my-auto mx-auto form-check-input"
                 type="checkbox"
                 checked
             />
             {% elif task.is_completed is False %}
             <input type='hidden' name='is_completed' value="True"/>
             <input
-                class="my-auto mx-auto w-25 form-check-input"
+                class="my-auto mx-auto form-check-input"
                 type="checkbox"
             />
             {% endif %}
