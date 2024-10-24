@@ -10,11 +10,26 @@
     >
         <input type='hidden' name='priority_by_id' value='{{task.id}}'/>
         <!-- Checkbox column -->
-        <div class="col-1 d-flex justify-content-center task-checkbox ">
-            <butto class="btn">
+        <form class="col-1 d-flex justify-content-center task-checkbox " hx-put={% url "submit_edit_task" task.id%} hx-trigger="change" hx-target="#task_body_{{task.id}}" hx-swap="outerHTML">
+            <input type='hidden' name='description' value="{{task.description}}"/>
+            <input type='hidden' name='expire_date' value="{{task.expire_date}}"/>
+            
+            {% if task.is_completed is True %}
+            <input type='hidden' name='is_completed' value="False"/>
+            <input
+                class="my-auto mx-auto w-25 form-check-input"
+                type="checkbox"
+                checked
+            />
+            {% elif task.is_completed is False %}
+            <input type='hidden' name='is_completed' value="True"/>
+            <input
+                class="my-auto mx-auto w-25 form-check-input"
+                type="checkbox"
+            />
+            {% endif %}
 
-            </butto>
-        </div>
+        </form>
         <!-- Description column -->
         <div class="col col-xs-10 col-md-8 col-lg-9 task-descrition ms-md-1 ">
             {% if error %}

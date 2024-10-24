@@ -68,7 +68,12 @@ def edit_task(task: models.Task, task_info: dict):
             task.expire_date = expire_date
 
     try:
-        task.is_completed = task_info["is_completed"]
+        if task_info["is_completed"] == "True" or task_info["is_completed"] == True:
+            is_completed = True
+        else:
+            is_completed = False
+        
+        task.is_completed = is_completed
     except MultiValueDictKeyError:
         pass
 
