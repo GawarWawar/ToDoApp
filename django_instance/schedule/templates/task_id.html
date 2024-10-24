@@ -10,24 +10,24 @@
     >
         <input type='hidden' name='priority_by_id' value='{{task.id}}'/>
         <!-- Checkbox column -->
-        <form class="col-1 d-flex justify-content-center task-checkbox " hx-put={% url "submit_edit_task" task.id%} hx-trigger="change" hx-target="#task_body_{{task.id}}" hx-swap="outerHTML">
+        <form 
+            x-data="{checked: JSON.parse(document.getElementById('{{task.id}}').textContent)}"
+            class="col-1 d-flex justify-content-center task-checkbox " 
+            hx-put="/cool" 
+            hx-trigger="change" 
+            hx-target="#task_body_{{task.id}}" 
+            hx-swap="outerHTML"
+        >
             <input type='hidden' name='description' value="{{task.description}}"/>
             <input type='hidden' name='expire_date' value="{{task.expire_date}}"/>
-            
-            {% if task.is_completed is True %}
-            <input type='hidden' name='is_completed' value="False"/>
+            <input type='hidden' name='is_completed' :value="checked"/>
+
             <input
                 class="my-auto mx-auto w-25 form-check-input"
                 type="checkbox"
-                checked
+                x-model="checked"
             />
-            {% elif task.is_completed is False %}
-            <input type='hidden' name='is_completed' value="True"/>
-            <input
-                class="my-auto mx-auto w-25 form-check-input"
-                type="checkbox"
-            />
-            {% endif %}
+                {{task.is_completed|json_script:task.id}}
 
         </form>
         <!-- Description column -->
