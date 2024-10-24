@@ -26,7 +26,7 @@ def create_new_project(project_info: dict, user: User):
         name = project_info["name"]
         expire_date = project_info["expire_date"]
     except MultiValueDictKeyError:
-        return ({"error": "Bad POST"}, 422)
+        return {"error": "Bad POST", "status": 422}
 
     if name == "":
         name = "PlaceHolder"
@@ -52,12 +52,12 @@ def edit_project(project: models.Project, project_info: dict):
         name = project_info["name"]
         expire_date = project_info["expire_date"]
     except MultiValueDictKeyError:
-        return ({"error": "Bad POST"}, 422)
+        return {"error": "Bad POST", "status": 422}
 
     if 0 < len(name) <= 100:
         project.name = name
     else:
-        return ({"error": "Bad POST"}, 422)
+        return {"error": "Bad POST", "status": 422}
 
     if expire_date == "" or expire_date == "None" or expire_date is None:
         expire_date = None

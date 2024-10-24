@@ -15,7 +15,11 @@ def project_tasks_endpoint(request, project_id):
     try:
         project = models.Project.objects.get(id=project_id)
     except ObjectDoesNotExist:
-        return HttpResponse(json.dumps({"error": "Bad ID"}), status=404)
+        context = {
+            "error": "Bad ID",
+            "meassage": "Please ensure that TODO list with this id exists"
+        }
+        return render(request, "notify_form.html", context)
 
     if request.method == "GET":
         tasks = get_all_tasks(project)

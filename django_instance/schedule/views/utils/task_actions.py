@@ -54,7 +54,7 @@ def edit_task(task: models.Task, task_info: dict):
         if 0 < len(description) < 1000:
             task.description = description
         else:
-            return ({"error": "Bad POST"}, 422)
+            return {"error": "Bad POST", "status": 422}
 
     try:
         expire_date = task_info["expire_date"]

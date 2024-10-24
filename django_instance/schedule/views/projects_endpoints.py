@@ -13,4 +13,8 @@ def projects_endpoint(request):
 
     elif request.method == "POST":
         new_project = create_new_project(request.POST, request.user)
-        return render(request, "project_id.html", {"project": new_project})
+        if new_project.get("error", None) is None:
+            return render(request, "project_id.html", {"project": new_project})
+        else:
+            new_project["message"] ="Please ensure to supply name and expire_date to create TODO list"
+            return render(request, "notify_form.html", new_project)

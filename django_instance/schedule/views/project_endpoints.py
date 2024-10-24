@@ -15,7 +15,11 @@ def project_endpoint(request, project_id):
     try:
         project = models.Project.objects.get(id=project_id)
     except ObjectDoesNotExist:
-        return HttpResponse(json.dumps({"error": "Bad ID"}), status=404)
+        context = {
+            "error": "Bad ID",
+            "meassage": "Please ensure that TODO list with this id exists"
+        }
+        return render(request, "notify_form.html", context)
 
     if request.method == "GET":
         return render(request, "project_id.html", {"project": get_project(project)})
@@ -24,7 +28,15 @@ def project_endpoint(request, project_id):
         project_info = QueryDict(request.body)
 
         project_after_edit = edit_project(project, project_info)
-        return render(request, "project_header.html", {"project": project_after_edit})
+        
+        if project_after_edit.get("error", None) is None:
+            return render(request, "project_header.html", {"project": project_after_edit})
+        else:
+            project_after_edit["project"] = project.dict_with_convert_time_field_to_json()
+            project_after_edit["message"] ="Please ensure that name of TODO list is longer then 1 symbol and shorter then 100"
+            return render(request, "project_edit.html", project_after_edit)
+        
+
 
     elif request.method == "DELETE":
         project_dict = delete_project(project)
