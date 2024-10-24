@@ -85,4 +85,4 @@ class Task(models.Model, models_methods.ModelsWithTimeFIelds):
         return self.description
     
     class Meta:
-        ordering=["priority"]
+        ordering=["-priority"]

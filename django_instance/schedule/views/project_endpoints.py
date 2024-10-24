@@ -51,9 +51,10 @@ def sort_project (request, project_id):
     if request.method == "POST":
         project = models.Project.objects.get(id=project_id)    
         task_list = request.POST.getlist("priority_by_id")
+        task_list_end = len(task_list)-1
         for priority, task_id in enumerate(task_list):
             task = models.Task.objects.get(id=task_id)
-            task.priority = priority
+            task.priority = task_list_end-priority
             task.save()
         
     return render(request, "project_id.html", {"project": project.to_dict_with_tasks()})

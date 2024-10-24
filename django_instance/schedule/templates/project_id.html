@@ -16,7 +16,7 @@
         <form 
             class="row project-taskformsection py-3 px-3 border border-secondary"
             hx-post={% url "create_task_for_project" project.id %} 
-            hx-target="#task_list_{{project.id}}" hx-swap="beforeend"
+            hx-target="#task_list_{{project.id}}" hx-swap="afterbegin"
         >
 
             <!-- Col with icon -->
