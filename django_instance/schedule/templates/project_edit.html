@@ -1,18 +1,18 @@
 <!DOCTYPE html>
 <html lang="en">
     <body>
-        <header class="row"  id="project_header_{{project.id}}">
+        <header class="row project-header border border-dark" id="project_header_{{project.id}}">
             <!-- Col with icon -->
             <div class="col-1"></div>
             <!-- Col with edit form of project-->
-            <div class="col col-md-9">
+            <div class="col col-md-9 my-2">
                 <form 
-                action="container form-control" 
-                hx-put={% url "submit_edit_project" project.id%} 
-                hx-trigger="submit" 
-                hx-target="#project_header_{{project.id}}"
-                hx-swap="outerHTML"
-            >
+                    action="container form-control" 
+                    hx-put={% url "submit_edit_project" project.id%} 
+                    hx-trigger="submit" 
+                    hx-target="#project_header_{{project.id}}"
+                    hx-swap="outerHTML"
+                >
                     <div class="row-cols-1"> Name </div>
                     <textarea class="row-col-1 form-control" type="text" name="name">{{project.name}}</textarea>
                     <div class="row-col-1"> Expire date in yyyy-mm-ddTHH:mm:ss format</div> <!--FIX THIS THROUGH ALPINE-->
@@ -24,11 +24,11 @@
                         class="row-col-1 form-control"
                     />
                     <button class="row-col-1 btn btn-success" type="submit">Confirm</button>
-                </div>
-            </form>
+                    </div>
+                </form>
             </div>
             <!-- Col with button to cancel edit-->
-            <div class="col-sm-2">
+            <div class="col-md col-xs-3 d-flex justify-content-center align-content-center align-items-center flex-row task-buttons">
              <!-- Edit Project Button -->
              <button
              hx-get={% url "get_project_header" project.id%}
