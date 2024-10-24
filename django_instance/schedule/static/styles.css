@@ -43,10 +43,17 @@ body, html, li, ul, form {
     .task-descrition{
         border-right-color: #6c757d;
         margin-left: 5;
+        border-right: 0px solid;
     
     }
     .task-buttons{
         border-top: 0.5px solid;
+        border-color: #6c757d;
+        display: flex;
+    }
+    .project-container{
+        background-color: white;
+        border: 0.5px solid;
         border-color: #6c757d;
     }
 
