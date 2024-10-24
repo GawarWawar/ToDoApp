@@ -3,9 +3,11 @@
 <body>
     <div 
         class="row task-container" id="task_body_{{task.id}}"
-        x-data="{visible:false, bgcolor: '', clicked: false}"
+        x-data="taskChecker($el)"
+        x-init="startCheck()" 
+        data-expire-date="{{task.expire_date}}" data-completed="{{task.is_completed}}"
         @mouseenter="visible = true; bgcolor = '#fcfed5';"
-        @mouseleave="visible = false; bgcolor = '';"
+        @mouseleave="visible = false; bgcolor = standard_color;"
         x-bind:style="{ background: bgcolor}"
     >
         <input type='hidden' name='priority_by_id' value='{{task.id}}'/>
@@ -38,6 +40,7 @@
             <p class="my-2">
                 {{task.description}}
             </p>
+            <div x-show="expired" class="text-warning bg-dark">Task Expired at {{task.expire_date}}</div>
         </div>
         <!-- Buttons columnm -->
         <div class="col-md col-xs-3 d-flex justify-content-center align-content-center flex-row task-buttons">
