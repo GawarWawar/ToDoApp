@@ -27,4 +27,4 @@ def project_tasks_endpoint(request, project_id):
             return render(request, "task_id.html", task)
         else:
             task["message"] ="Please ensure that description of your task is longer then 1 symbol and shorter then 1000"
-            return render(request, "after_delete_form.html", task)
+            return render(request, "notify_form.html", task)

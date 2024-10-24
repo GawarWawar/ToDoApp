@@ -36,16 +36,15 @@ def task_endpoint(request, task_id):
             task = models.Task.objects.get(id=task_id)
         except ObjectDoesNotExist:
             return render(
-                request, "after_delete_form.html", 
+                request, "notify_form.html", 
                 {
                     "error": "Bad ID", 
                     "message": "Could not delete task with this id"
                 }
             )
-        
         task_dict = delete_task(task)
         return render(
-            request, "after_delete_form.html", 
+            request, "notify_form.html", 
             {
                 "message": f"Task with description: \n {task.description} \n was deleted",
                 "task": task_dict

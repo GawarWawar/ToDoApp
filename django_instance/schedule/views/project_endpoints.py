@@ -30,7 +30,7 @@ def project_endpoint(request, project_id):
         project_dict = delete_project(project)
         
         return render(
-            request, "after_delete_form.html", 
+            request, "notify_form.html", 
             {
                 "message": f"TODO list with name: \n {project.name} \n was deleted",
                 "project": project_dict
