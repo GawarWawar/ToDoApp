@@ -24,7 +24,7 @@ def create_new_task(task_info: dict, project: models.Project):
     try:
         task_description = task_info["description"]
     except MultiValueDictKeyError:
-        return {"error": "Bad POST"}, 422
+        return {"error": "Bad POST", "status": 422}
 
     if task_description != "" and len(task_description) < 1000:
         priority = project.get_next_max_priority()
@@ -35,9 +35,9 @@ def create_new_task(task_info: dict, project: models.Project):
             priority=priority,
         )
         new_task.save()
-        return {"task": new_task.dict_with_convert_time_field_to_json()}, None
+        return {"task": new_task.dict_with_convert_time_field_to_json()}
     else:
-        return {"error": "Bad POST"}, 422
+        return {"error": "Bad POST", "status": 422}
 
 
 def get_task(task: models.Task):
