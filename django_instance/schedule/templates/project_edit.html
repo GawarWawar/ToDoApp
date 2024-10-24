@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
     <body>
-        <header class="row">
+        <header class="row"  id="project_header_{{project.id}}">
             <!-- Col with icon -->
             <div class="col-1"></div>
             <!-- Col with edit form of project-->
@@ -10,7 +10,7 @@
                 action="container form-control" 
                 hx-put={% url "submit_edit_project" project.id%} 
                 hx-trigger="submit" 
-                hx-target="#project_body_{{project.id}}"
+                hx-target="#project_header_{{project.id}}"
                 hx-swap="outerHTML"
             >
                     <div class="row-cols-1"> Name </div>
@@ -31,8 +31,8 @@
             <div class="col-sm-2">
              <!-- Edit Project Button -->
              <button
-             hx-get={% url "project_details" project.id%}
-             hx-target="#project_body_{{project.id}}"
+             hx-get={% url "get_project_header" project.id%}
+             hx-target="#project_header_{{project.id}}"
              hx-swap="outerHTML"
         
              class="btn btn-warning"
