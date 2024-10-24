@@ -68,7 +68,7 @@ def edit_task(task: models.Task, task_info: dict):
             task.expire_date = expire_date
 
     try:
-        if task_info["is_completed"] == "True" or task_info["is_completed"] == True:
+        if task_info["is_completed"].lower() == "true" or task_info["is_completed"] == True:
             is_completed = True
         else:
             is_completed = False
