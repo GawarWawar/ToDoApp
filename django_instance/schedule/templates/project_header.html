@@ -2,8 +2,10 @@
 <html lang="en">
 <body>
     <header 
-        class="row project-header border border-dark" id="project_header_{{project.id}}"
-        x-data="{visible:false}"
+        class="row  border project-header border-dark" id="project_header_{{project.id}}"
+        x-data="expireDateChecker($el)"
+        x-init="startProjectCheck()" 
+        data-expire-date="{{project.expire_date}}" data-completed=""
         @mouseenter="visible = true;"
         @mouseleave="visible = false"
     >
@@ -14,6 +16,7 @@
         <!-- Col with name of project -->
         <div class="col col-md-9 fs-4 my-2">
         {{project.name}}
+        <div x-show="expiredStatus" class="text-warning bg-dark">TODO list Expired at {{project.expire_date}}</div>
         </div>
         <!-- Col with buttons to edit and delete project-->
         <div 
