@@ -9,26 +9,25 @@
             <!-- Col with edit form of project-->
             <div class="col col-md-9 my-2">
                 <form 
-                    action="container form-control" 
+                    class="d-flex flex-column container" 
                     hx-put={% url "submit_edit_project" project.id%} 
                     hx-trigger="submit" 
                     hx-target="#project_header_{{project.id}}"
                     hx-swap="outerHTML"
                 >
-                    <div class="row-cols-1"> Name </div>
+                    <div class="row-cols-1 my-2"> Name </div>
                     <textarea class="row-col-1 form-control" type="text" name="name">{{project.name}}</textarea>
                     {% if error %}
                     <p class="text-danger">{{message}}</p>
                     {% endif %}
-                    <div class="row-col-1"> Expire date in yyyy-mm-ddTHH:mm:ss format</div> <!--FIX THIS THROUGH ALPINE-->
+                    <div class="row-col-1 my-2"> Expire date in yyyy-mm-ddTHH:mm:ss format</div>
                     <input 
                         type="datetime-local" 
                         name="expire_date" 
                         value={{project.expire_date}}
-                        class="row-col-1 form-control"
+                        class="row-col-1 form-control my-2"
                     />
-                    <button class="row-col-1 btn btn-success" type="submit">Confirm</button>
-                    </div>
+                    <button class="row-col-1 btn btn-success align-self-center" type="submit">Confirm</button>
                 </form>
             </div>
             <!-- Col with button to cancel edit-->
