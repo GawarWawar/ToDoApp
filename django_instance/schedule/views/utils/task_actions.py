@@ -1,22 +1,19 @@
 import datetime
-
-from django.shortcuts import HttpResponse
 from django.utils.datastructures import MultiValueDictKeyError
-
-import json
 
 from django_instance.settings import JS_TIME_FORMAT
 from schedule import models
 
-#depricated(included in project_details (project returns with tasks)))
+
+# depricated(included in project_details (project returns with tasks)))
 def get_all_tasks(project: models.Project):
     tasks = models.Task.objects.filter(project_instance=project)
     all_tasks = []
     for task in tasks:
         proj_dict = task.dict_with_convert_time_field_to_json()
         all_tasks.append(proj_dict)
-        
-    tasks_dict = {"tasks":all_tasks}
+
+    tasks_dict = {"tasks": all_tasks}
     return tasks_dict
 
 
@@ -28,7 +25,7 @@ def create_new_task(task_info: dict, project: models.Project):
 
     if task_description != "" and len(task_description) < 1000:
         priority = project.get_next_max_priority()
-        
+
         new_task = models.Task.objects.create(
             project_instance=project,
             description=task_description,
@@ -44,7 +41,7 @@ def create_new_task(task_info: dict, project: models.Project):
             else:
                 expire_date = datetime.datetime.strptime(expire_date, JS_TIME_FORMAT)
                 new_task.expire_date = expire_date
-        
+
         new_task.save()
         return {"task": new_task.dict_with_convert_time_field_to_json()}
     else:
@@ -52,7 +49,6 @@ def create_new_task(task_info: dict, project: models.Project):
 
 
 def get_task(task: models.Task):
-    
     return task.dict_with_convert_time_field_to_json()
 
 
@@ -79,11 +75,11 @@ def edit_task(task: models.Task, task_info: dict):
             task.expire_date = expire_date
 
     try:
-        if task_info["is_completed"].lower() == "true" or task_info["is_completed"] == True:
+        if task_info["is_completed"].lower() == "true" or task_info["is_completed"]:
             is_completed = True
         else:
             is_completed = False
-        
+
         task.is_completed = is_completed
     except MultiValueDictKeyError:
         pass

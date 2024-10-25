@@ -1,10 +1,7 @@
 import datetime
 
 from django.contrib.auth.models import User
-from django.shortcuts import HttpResponse
 from django.utils.datastructures import MultiValueDictKeyError
-
-import json
 
 from django_instance.settings import JS_TIME_FORMAT
 from schedule import models
@@ -16,7 +13,7 @@ def get_all_projects(user: User):
     for project in projects:
         proj_dict = project.dict_with_convert_time_field_to_json()
         all_projects.append(proj_dict)
-        
+
     projects = {"projects": all_projects}
     return projects
 

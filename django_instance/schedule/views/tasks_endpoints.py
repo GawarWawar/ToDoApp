@@ -1,9 +1,8 @@
 from allauth.account import decorators
 
-from django.shortcuts import HttpResponse, render
+from django.shortcuts import render
 from django.views.decorators.csrf import csrf_exempt
 from django.core.exceptions import ObjectDoesNotExist
-import json
 
 from schedule import models
 from .utils.task_actions import get_all_tasks, create_new_task
@@ -17,18 +16,20 @@ def project_tasks_endpoint(request, project_id):
     except ObjectDoesNotExist:
         context = {
             "error": "Bad ID",
-            "meassage": "Please ensure that TODO list with this id exists"
+            "meassage": "Please ensure that TODO list with this id exists",
         }
         return render(request, "notify_form.html", context)
 
     if request.method == "GET":
         tasks = get_all_tasks(project)
-        
+
         return render(request, "project_tasks.html", tasks)
     if request.method == "POST":
         task = create_new_task(request.POST, project)
         if task.get("error", None) is None:
             return render(request, "task_id.html", task)
         else:
-            task["message"] ="Please ensure that description of your task is longer then 1 symbol and shorter then 1000"
+            task["message"] = (
+                "Please ensure that description of your task is longer then 1 symbol and shorter then 1000"
+            )
             return render(request, "notify_form.html", task)

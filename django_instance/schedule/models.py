@@ -27,18 +27,16 @@ class Project(models.Model, models_methods.ModelsWithTimeFIelds):
             "creation_date": self.creation_date,
             "expire_date": self.expire_date,
         }
-        
-    def to_dict_with_tasks(self, only_task_id = False) -> dict[str]:
+
+    def to_dict_with_tasks(self, only_task_id=False) -> dict[str]:
         self_dict = self.dict_with_convert_time_field_to_json()
-        
+
         self_dict["tasks"] = []
         for task in Task.objects.filter(project_instance=self):
             if only_task_id:
                 self_dict["tasks"].append(task.id)
             else:
-                self_dict["tasks"].append(
-                    task.dict_with_convert_time_field_to_json()
-                )
+                self_dict["tasks"].append(task.dict_with_convert_time_field_to_json())
 
         return self_dict
 
@@ -47,7 +45,9 @@ class Project(models.Model, models_methods.ModelsWithTimeFIelds):
         if not existing_tasks.exists():
             return 0
         else:
-            current_max = existing_tasks.aggregate(max_priority=models.Max("priority"))["max_priority"]
+            current_max = existing_tasks.aggregate(max_priority=models.Max("priority"))[
+                "max_priority"
+            ]
             return current_max + 1
 
     def __str__(self):
@@ -83,6 +83,6 @@ class Task(models.Model, models_methods.ModelsWithTimeFIelds):
 
     def __str__(self):
         return self.description
-    
+
     class Meta:
-        ordering=["-priority"]
+        ordering = ["-priority"]
