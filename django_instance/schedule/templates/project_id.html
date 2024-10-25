@@ -4,7 +4,7 @@
     <div class="container my-3 project-container rounded-bottom-5" id="project_body_{{project.id}}">
         <!-- Row header -->
         <header 
-            class="row project-header border border-dark" id="project_header_{{project.id}}"
+            class="row" id="project_header_{{project.id}}"
             hx-get={% url "get_project_header" project.id %}
             hx-target="this"
             hx-swap="outerHTML"
