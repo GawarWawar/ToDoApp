@@ -34,6 +34,17 @@ def create_new_task(task_info: dict, project: models.Project):
             description=task_description,
             priority=priority,
         )
+        try:
+            expire_date = task_info["expire_date"]
+        except MultiValueDictKeyError:
+            expire_date = new_task.expire_date
+        else:
+            if expire_date == "" or expire_date == "None" or expire_date is None:
+                expire_date = None
+            else:
+                expire_date = datetime.datetime.strptime(expire_date, JS_TIME_FORMAT)
+                new_task.expire_date = expire_date
+        
         new_task.save()
         return {"task": new_task.dict_with_convert_time_field_to_json()}
     else:

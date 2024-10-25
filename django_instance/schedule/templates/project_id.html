@@ -14,11 +14,13 @@
         </header>
         <!-- Row Form to add task -->
         <form 
-            class="row project-taskformsection py-3 px-3 border border-secondary"
+            class="row project-taskformsection py-3 px-3 border border-secondary justify-content-center"
             hx-post={% url "create_task_for_project" project.id %} 
             hx-target="#task_list_{{project.id}}" hx-swap="afterbegin"
+            x-data="{additional_content: false, fix: false}"
+            @submit="additional_content = false"
         >
-
+            
             <!-- Col with icon -->
             <div class="col-sm-1 d-flex justify-content-center align-items-center">
                 <button class="btn text-success">
@@ -26,14 +28,31 @@
                 </button>
             </div>
             <!-- Col with input field -->
+             <div class="col col-xs-10 col-md-8 col-lg-9 pe-0 d-flex flex-column justify-content-center">
             <input
-                class="col col-xs-10 col-md-8 col-lg-9 pe-0 border border-secondary "
+                class="row-cols-1 "
                 type="text"
                 name="description"
                 placeholder="Start typing here to create a task"
-            > 
+                @click="additional_content = true"
+            /> 
+            <div class="row-col-1 my-2" x-show="additional_content"> Expire date in yyyy-mm-ddTHH:mm:ss format</div>
+            <input 
+                type="datetime-local" 
+                name="expire_date" 
+                class="row-col-1 form-control my-2"
+                x-show="additional_content"
+            />
+            <div
+                x-show="additional_content"
+                @click="additional_content = false"
+                class="btn btn-warning row-col-1 align-self-center"
+            >
+                Cancel
+            </div>
+        </div>
             <!-- Col with button -->
-            <button class="btn btn-success col-md col-xs-3 border border-secondary" type="submit">
+            <button class="btn btn-success col-md col-xs-3 border border-secondary align-self-center" type="submit">
                 Add Task
             </button>
         </form>
