@@ -2,13 +2,13 @@
 <html lang="en">
 <body>
     <form
-        class='container' id="add_form"
+        class='container d-flex flex-column align-self-center justify-content-center my-4 py-2 bg-white border border-primary' id="add_form"
         hx-post={% url "new_project" %}
         hx-target="#project_list"
         hx-swap="beforeend"
     >
     <!-- Buttons open more detailed form to fill before creatin -->
-        <div class="row">
+        <div class="row-cols-1 align-self-center">
             <button
                 class="btn btn-primary col"
                 hx-get={% url "add_button" %}
@@ -18,19 +18,20 @@
                 Close
             </button>
         </div>    
-        <div class="row">
-            <div class="col">Name</div>
-            <div class="col">Expire Date (optional)</div>
+        <div class="row m-2">
+            <div class="text-center">Name</div>
         </div>
-        <div class="row">
-            <div class="col">
-                <input type="text" name="name" placeholder="PlaceHorlder" />
-            </div>
-            <div class="col">
-                <input type="datetime-local" name="expire_date" />
-            </div>
+        <div class="row m-2">
+            <input class="form-control" type="text" name="name" placeholder="DafaultName" />
         </div>
-        <div class="row ">
+        <div class="row m-2">
+            <div class="text-center">Expire Date (optional)</div>
+        </div>
+        <div class="row m-2 align-self-center">
+            <input class="form-control " type="datetime-local" name="expire_date" />
+        </div>
+
+        <div class="row align-self-center">
             <button
                 class="btn btn-primary"
                 type="submit"
