@@ -18,6 +18,7 @@ body, html, li, ul, form {
 
 .background {
     background-image: linear-gradient(white, orange);
+    padding-bottom: 1000px; 
 }
 
 .task-checkbox{
