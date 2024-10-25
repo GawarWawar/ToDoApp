@@ -5,16 +5,16 @@
 
 # 1. Task manager
 ### Functional requirements
-- [x] Being able to create/update/delete projects - Fully functional, but with 1 bug that I couldn't fix. When task in the middle deleted, it doesn't update its task automatically
-- [x] Being able to create/update/delete tasks to projects - 100%
-- [ ] Being able to prioritize tasks into a project - Add button to drag tasks, but it does not have functionality
-- [ ] Being able to choose deadline for my task - Tasks and Projects has deadline, but they do not have any effect on behavior
-- [x] being able to mark a task as 'done'
+- [x] Being able to create/update/delete projects - Functional 100%
+- [x] Being able to create/update/delete tasks to projects - Functional 100%. With 1 hidden bug: when project_id page updated with HTMX request, sort stop working. It is headden, because app doesnt update project anywhere after initial download. Tasks and project header updates separately.
+- [x] Being able to prioritize tasks into a project - Task could be grabbed by special button
+- [x] Being able to choose deadline for my task - Tasks and Projects has deadline. Tasks change color to red, and both of them have special message appear when they expire.
+- [x] being able to mark a task as 'done'. Bug on mobile. When changing done status, task will appear white. Will change color after click or refresh
 ### Technical requirements
 - [x] It works as WEB application on Python 3.12 & Django v5.1 - 100%
 - [x] Docker-compose for running application - This step is ready, however can not add superuser through docker.
-- [x] For the client side  HTML, CSS (Bootstrap v5), JavaScript (Alpine.js)
-- [x] It should be responsible for desktop and mobile (use Bootstrap Grid system) - Grid is a little bit different, but it is still comfortable to use it on mobile
+- [x] For the client side  HTML, CSS (Bootstrap v5), JavaScript (HTMX, Alpine.js)
+- [x] It should be responsible for desktop and mobile (use Bootstrap Grid system) - Grid is a little bit different, but it is still comfortable to use on mobile
 - [x] It should have a client side and server side validation - Client side is a little bit on weak side, but server side is doing its work good :D
 - [x] It should look like on screens (see attached screenshot below) - Made as close, as possible
 ### Additional notes
