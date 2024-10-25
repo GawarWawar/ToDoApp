@@ -16,7 +16,7 @@
                     <div class="row-cols-1"> Name </div>
                     <textarea class="row-col-1 form-control" type="text" name="name">{{project.name}}</textarea>
                     {% if error %}
-                    <p class="text-warning">{{message}}</p>
+                    <p class="text-danger">{{message}}</p>
                     {% endif %}
                     <div class="row-col-1"> Expire date in yyyy-mm-ddTHH:mm:ss format</div> <!--FIX THIS THROUGH ALPINE-->
                     <input 

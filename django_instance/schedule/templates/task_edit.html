@@ -40,7 +40,7 @@
         <div class="row-cols-1 my-2"> Description </div>
         <textarea class="row-col-1 form-control my-2" type="text" name="description">{{task.description}}</textarea>
         {% if error %}
-        <p class="text-warning">{{message}}</p>
+        <p class="text-danger">{{message}}</p>
         {% endif %}
         <div class="row-col-1"> Date in yyyy-mm-ddTHH:mm:ss format</div> <!--FIX THIS THROUGH ALPINE-->
         <input 
