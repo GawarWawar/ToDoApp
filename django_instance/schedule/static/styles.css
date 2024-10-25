@@ -39,6 +39,15 @@ body, html, li, ul, form {
     border-color: #6c757d;
 }
 
+.grabber{
+    cursor: move;
+	cursor: -webkit-grabbing;
+}
+
+.ghost {
+    opacity: 0.4;
+  }
+
 @media (max-width: 768px) {
     .task-descrition{
         border-right-color: #6c757d;

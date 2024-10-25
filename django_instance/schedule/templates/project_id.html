@@ -56,7 +56,10 @@
         {% endfor %}
         </form>
         <script>
-            Sortable.create(task_list_{{project.id}});
+            Sortable.create(task_list_{{project.id}}, {
+                handle: ".grabber",
+                ghostClass: "ghost"
+            });
         </script>
     </div>
 </body>
